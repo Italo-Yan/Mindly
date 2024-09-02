@@ -1,0 +1,20 @@
+{
+  "name": "psyspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start-backend": "node backend/index.js",
+    "start-frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
