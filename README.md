@@ -1,7 +1,7 @@
-# Mindly: Acessível, simples e acolhedor
+# Mindly
 
 ![]()
-Este é um aplicativo de lista de tarefas (todo list) desenvolvido com Flutter. O aplicativo foi projetado para ser simples, intuitivo e eficiente, oferecendo uma interface limpa e amigável.
+Este é um projeto de agenda desenvolvido com React. O aplicativo foi projetado para ser acessível, simples e acolhedor.
 
 ## Funcionalidades
 
