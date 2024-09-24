@@ -1,14 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="Container">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          O projeto está rodando!!!.
-        </p>
+        <h1>
+          Mindly
+        </h1>
       </header>
     </div>
   );
