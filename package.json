@@ -12,7 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.21.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
