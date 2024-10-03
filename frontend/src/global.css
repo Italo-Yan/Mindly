@@ -1,0 +1,44 @@
+:root {
+  --white: #FFFFFF;
+  --beige: #F5EDED;
+
+  --blue-100: #D2E0FB;
+  --blue-300: #7FA1C3;
+  --blue-500: #6482AD;
+
+  --black: #212529;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  width: 100%;
+  height: 420px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: var(--blue-100);
+}
+
+body,
+input,
+textarea,
+button {
+	font-family: "DM sans", sans-serif;
+	font-weight: 400;
+	font-size: 1rem;
+}

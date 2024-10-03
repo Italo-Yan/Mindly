@@ -27,7 +27,7 @@ desmarcar;
 
 ## Tecnologias Utilizadas
 
-- **React**: Framework que cria interfaces de usuário a partir de peças individuais chamadas componentes escritos em JavaScript.
+- **Vite**: Framework que cria interfaces de usuário a partir de peças individuais chamadas componentes escritos em JavaScript.
 - **Express**: Framework para aplicativo da web do Node.js mínimo e flexível que fornece um conjunto robusto de recursos para aplicativos web e móveis.
 
 ### Dependências
