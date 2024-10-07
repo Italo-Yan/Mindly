@@ -1,0 +1,50 @@
+.services {
+  text-align: center;
+  margin: 3rem auto;
+  padding: 1rem;
+}
+
+.services h3 {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--black);
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.serviceCard {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-5px);
+}
+
+.check {
+  margin-bottom: 1rem;
+  color: var(--green);
+}
+
+.serviceCard h4 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.serviceCard p {
+  color: #7f8c8d;
+  font-size: 1rem;
+  line-height: 1.5;
+}

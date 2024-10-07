@@ -1,0 +1,46 @@
+.infoBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--beige);
+  color: var(--black);
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  width: 63.8rem;
+  height: 12.5rem;
+  padding: 2rem;
+
+  margin: 0 auto;
+  margin-top: 4.3rem;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.infoItem h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.infoItem p {
+  font-size: 1rem;
+  color: var(--blue-500);
+  margin: 0;
+  padding-top: 5px;
+}
+
+.divider {
+  width: 1px;
+  height: 70px;
+  background-color: var(--black);
+  margin: 0 2rem;
+  opacity: 0.3;
+}
