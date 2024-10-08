@@ -1,0 +1,41 @@
+footer {
+  background-color: var(--blue-500);
+  padding: 50px;
+  margin-top: 8rem;
+}
+
+p {
+  color: var(--white-100);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.footerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  max-width: 1200px;
+  margin: 0 auto;
+
+  color: var(--white);
+}
+
+.footerText h3 {
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+}
+
+.footerItems {
+  display: flex;
+  gap: 20px;
+}
+
+.footerItems svg {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.footerItems svg:hover {
+  transform: scale(1.1);
+}
