@@ -48,7 +48,7 @@ public class Paciente {
     @Column(name = "telefone_paciente")
     private String telPaciente;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cpfPacienteAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agendamento> agendamentoPaciente = new HashSet<>();
 
     public @NotNull @Size(min = 11, max = 20) String getCpfPaciente() {

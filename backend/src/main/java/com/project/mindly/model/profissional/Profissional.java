@@ -55,7 +55,7 @@ public class Profissional {
     @OneToMany(mappedBy = "cpfProfAgenda", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agenda> agendas = new HashSet<>();
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cpfProfAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agendamento> agendamentos = new HashSet<>();
 
     //@OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
