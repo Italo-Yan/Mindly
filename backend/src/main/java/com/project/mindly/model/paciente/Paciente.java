@@ -2,6 +2,7 @@ package com.project.mindly.model.paciente;
 
 
 import com.project.mindly.model.agendamento.Agendamento;
+import com.project.mindly.model.sessao.Sessao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -50,6 +51,9 @@ public class Paciente {
 
     @OneToMany(mappedBy = "cpfPacienteAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agendamento> agendamentoPaciente = new HashSet<>();
+
+    @OneToMany(mappedBy = "cpfPacienteSessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Sessao> sessaoPaciente = new HashSet<>();
 
     public @NotNull @Size(min = 11, max = 20) String getCpfPaciente() {
         return cpfPaciente;
@@ -121,5 +125,13 @@ public class Paciente {
 
     public void setAgendamentoPaciente(Set<Agendamento> agendamentoPaciente) {
         this.agendamentoPaciente = agendamentoPaciente;
+    }
+
+    public Set<Sessao> getSessaoPaciente() {
+        return sessaoPaciente;
+    }
+
+    public void setSessaoPaciente(Set<Sessao> sessaoPaciente) {
+        this.sessaoPaciente = sessaoPaciente;
     }
 }

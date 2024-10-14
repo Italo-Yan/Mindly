@@ -1,4 +1,7 @@
 package com.project.mindly.repository;
 
-public class AgendamentoRepository {
+import com.project.mindly.model.agendamento.Agendamento;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AgendamentoRepository extends JpaRepository<Agendamento, Integer> {
 }

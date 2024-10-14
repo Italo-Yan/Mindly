@@ -5,6 +5,7 @@ import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.model.profissional.ProfissionalDto;
 import com.project.mindly.repository.ProfissionalRepository;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +16,22 @@ import java.util.List;
 @RequestMapping("api/profissional")
 public class ProfissionalController {
 
-
-    private final ProfissionalRepository profissionalRepository;
-
-    public ProfissionalController(ProfissionalRepository profissionalRepository) {
-        this.profissionalRepository = profissionalRepository;
-    }
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
 
     @GetMapping
     public List<Profissional> getAll() {
         return profissionalRepository.findAll();
     }
 
-    @PostMapping("create")
+    @GetMapping("/{cpf_prof}")
+    public ResponseEntity<Profissional> getByCpf(@PathVariable @Valid String cpf_prof) {
+        return profissionalRepository.findById(cpf_prof)
+                .map(result -> ResponseEntity.ok().body(result))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/create")
     public ResponseEntity<Profissional> createProfissional (@RequestBody @Valid ProfissionalDto prfDto) {
         try {
             Profissional prof = new Profissional();

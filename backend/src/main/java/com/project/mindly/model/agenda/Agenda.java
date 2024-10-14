@@ -1,5 +1,6 @@
 package com.project.mindly.model.agenda;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.mindly.model.profissional.Profissional;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -34,12 +35,13 @@ public class Agenda {
     @NotNull
     private LocalTime horaFim;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "ativo", nullable = false)
     private AgendaAtivo ativo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cpf_prof", nullable = false)
+    @JsonManagedReference
     @NotNull
     private Profissional cpfProfAgenda;
 

@@ -1,8 +1,10 @@
 package com.project.mindly.model.profissional;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.mindly.model.agenda.Agenda;
 import com.project.mindly.model.agendamento.Agendamento;
+import com.project.mindly.model.sessao.Sessao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -53,13 +55,14 @@ public class Profissional {
     private String telefoneProf;
 
     @OneToMany(mappedBy = "cpfProfAgenda", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Agenda> agendas = new HashSet<>();
 
     @OneToMany(mappedBy = "cpfProfAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Agendamento> agendamentos = new HashSet<>();
 
-    //@OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private Set<Sessao> sessoes = new HashSet<>();
+    @OneToMany(mappedBy = "cpfProfSessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Sessao> sessoes = new HashSet<>();
 
 
     public @NotNull @Size(min = 11, max = 20) String getCpfProf() {
@@ -148,5 +151,13 @@ public class Profissional {
 
     public void setAgendamentos(Set<Agendamento> agendamentos) {
         this.agendamentos = agendamentos;
+    }
+
+    public Set<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(Set<Sessao> sessoes) {
+        this.sessoes = sessoes;
     }
 }

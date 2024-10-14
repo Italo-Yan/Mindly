@@ -3,11 +3,14 @@ package com.project.mindly.model.agendamento;
 
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
+import com.project.mindly.model.sessao.Sessao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_agendamento")
@@ -54,6 +57,9 @@ public class Agendamento {
     @JoinColumn(name = "cpf_paciente", nullable = false)
     @NotNull
     private Paciente cpfPacienteAgendamento;
+
+    @OneToMany(mappedBy = "agendamentoSessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Sessao> sessoes = new HashSet<>();
 
     @NotNull
     public int getId() {
@@ -135,5 +141,13 @@ public class Agendamento {
 
     public void setCpfPacienteAgendamento(@NotNull Paciente cpfPacienteAgendamento) {
         this.cpfPacienteAgendamento = cpfPacienteAgendamento;
+    }
+
+    public Set<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(Set<Sessao> sessoes) {
+        this.sessoes = sessoes;
     }
 }
