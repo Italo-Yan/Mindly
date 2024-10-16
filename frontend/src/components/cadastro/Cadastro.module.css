@@ -1,0 +1,45 @@
+.cadastroMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 40px 20px;
+}
+
+.cadastroMain h2 {
+  margin-bottom: 20px;
+  color: #5d6d9f;
+}
+
+.cadastroOptions {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background-color: #f9f3f1;
+  padding: 40px;
+  border-radius: 15px;
+}
+
+.option {
+  text-align: center;
+}
+
+.option h3 {
+  margin-bottom: 20px;
+  color: #5d6d9f;
+}
+
+.pacienteBtn, .profissionalBtn {
+  border: 1px solid #5d6d9f;
+  border-radius: 20px;
+  padding: 10px 20px;
+  background: none;
+  color: #5d6d9f;
+  cursor: pointer;
+}
+
+.paciente-btn:hover, .profissional-btn:hover {
+  background-color: #5d6d9f;
+  color: white;
+}
