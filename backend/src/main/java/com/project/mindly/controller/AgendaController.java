@@ -30,7 +30,7 @@ public class AgendaController {
     }
 
     @GetMapping("/{idAgenda}")
-    public ResponseEntity getAgendaById(@PathVariable @Valid int idAgenda) {
+    public ResponseEntity<Agenda> getAgendaById(@PathVariable @Valid int idAgenda) {
         return agendaRepository.findById(idAgenda)
                 .map(result -> ResponseEntity.ok().body(result))
                 .orElse(ResponseEntity.notFound().build());

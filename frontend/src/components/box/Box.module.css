@@ -1,6 +1,6 @@
 .infoBox {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 
   background-color: var(--beige);
@@ -27,6 +27,7 @@
 .infoItem h2 {
   font-size: 3rem;
   font-weight: bold;
+  line-height: 1.2;
   margin: 0;
 }
 
