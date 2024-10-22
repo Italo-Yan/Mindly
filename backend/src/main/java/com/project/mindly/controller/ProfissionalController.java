@@ -27,8 +27,8 @@ public class ProfissionalController {
     @GetMapping("/{cpf_prof}")
     public ResponseEntity<Profissional> getByCpf(@PathVariable @Valid String cpf_prof) {
         return profissionalRepository.findById(cpf_prof)
-                .map(result -> ResponseEntity.ok().body(result))
-                .orElse(ResponseEntity.notFound().build());
+                .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping("/create")
@@ -41,8 +41,8 @@ public class ProfissionalController {
             prof.setEmailProf(prfDto.email());
             prof.setSenha(prfDto.senha());
             prof.setDescProf(prfDto.descricao());
-            prof.setEspecialidade(prfDto.esp());
-            prof.setEnderecoProf(prfDto.end());
+            prof.setEspecialidade(prfDto.especialidade());
+            prof.setEnderecoProf(prfDto.endereco());
             prof.setTelefoneProf(prfDto.tel());
             profissionalRepository.save(prof);
             return ResponseEntity.status(HttpStatus.CREATED).body(prof);
@@ -50,6 +50,36 @@ public class ProfissionalController {
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PatchMapping("/{cpf_prof}")
+    public ResponseEntity<Profissional> updateProfissional (@RequestBody @Valid ProfissionalDto data,
+                                                            @PathVariable @Valid String cpf_prof){
+        return profissionalRepository.findById(cpf_prof)
+                .map(result -> {
+                    result.setTelefoneProf(data.tel());
+                    result.setDescProf(data.descricao());
+                    result.setEmailProf(data.email());
+                    result.setSenha(data.senha());
+                    result.setCpfProf(data.cpf());
+                    result.setNomeProf(data.nome());
+                    result.setCrp(data.crp());
+                    result.setEnderecoProf(data.endereco());
+                    result.setEspecialidade(data.especialidade());
+                    profissionalRepository.save(result);
+                    return ResponseEntity.status(HttpStatus.OK).body(result);
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @DeleteMapping("/{cpf_prof}")
+    public ResponseEntity<Void> deleteProfissional(@PathVariable @Valid String cpf_prof) {
+        return profissionalRepository.findById(cpf_prof)
+                .map(result -> {
+                    profissionalRepository.delete(result);
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
 }

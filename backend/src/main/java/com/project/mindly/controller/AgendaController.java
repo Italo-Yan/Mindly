@@ -32,8 +32,8 @@ public class AgendaController {
     @GetMapping("/{idAgenda}")
     public ResponseEntity<Agenda> getAgendaById(@PathVariable @Valid int idAgenda) {
         return agendaRepository.findById(idAgenda)
-                .map(result -> ResponseEntity.ok().body(result))
-                .orElse(ResponseEntity.notFound().build());
+                .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping("/create")
@@ -56,5 +56,35 @@ public class AgendaController {
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PatchMapping("/{idAgenda}")
+    public ResponseEntity<Agenda> updateAgenda(@RequestBody @Valid AgendaDto data, @PathVariable int idAgenda) {
+        Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
+        if (cpfProf == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return agendaRepository.findById(idAgenda)
+                .map(result -> {
+                    result.setCpfProfAgenda(cpfProf);
+                    result.setAtivo(data.ativo());
+                    result.setDuracao(data.duracao());
+                    result.setHoraInicio(data.horaInicio());
+                    result.setHoraFim(data.horaFim());
+                    result.setDiaDaSemana(data.diaDaSemana());
+                    Agenda updatedAgenda = agendaRepository.save(result);
+                    return ResponseEntity.status(HttpStatus.OK).body(updatedAgenda);
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @DeleteMapping("/{idAgenda}")
+    public ResponseEntity<Void> deleteAgenda(@PathVariable @Valid int idAgenda) {
+        return agendaRepository.findById(idAgenda)
+                .map(result -> {
+                    agendaRepository.delete(result);
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }
