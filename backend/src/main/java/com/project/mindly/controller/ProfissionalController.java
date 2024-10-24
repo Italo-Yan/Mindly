@@ -3,9 +3,9 @@ package com.project.mindly.controller;
 
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.model.profissional.ProfissionalDto;
+import com.project.mindly.model.profissional.ProfissionalDtoPatch;
 import com.project.mindly.repository.ProfissionalRepository;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +16,20 @@ import java.util.List;
 @RequestMapping("api/profissional")
 public class ProfissionalController {
 
-    @Autowired
-    private ProfissionalRepository profissionalRepository;
+
+    private final ProfissionalRepository profissionalRepository;
+
+    public ProfissionalController(ProfissionalRepository profissionalRepository) {
+        this.profissionalRepository = profissionalRepository;
+    }
 
     @GetMapping
-    public List<Profissional> getAll() {
+    public List<Profissional> getProfissionalAll() {
         return profissionalRepository.findAll();
     }
 
     @GetMapping("/{cpf_prof}")
-    public ResponseEntity<Profissional> getByCpf(@PathVariable @Valid String cpf_prof) {
+    public ResponseEntity<Profissional> getByCpfProfissional(@PathVariable @Valid String cpf_prof) {
         return profissionalRepository.findById(cpf_prof)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -53,15 +57,14 @@ public class ProfissionalController {
     }
 
     @PatchMapping("/{cpf_prof}")
-    public ResponseEntity<Profissional> updateProfissional (@RequestBody @Valid ProfissionalDto data,
-                                                            @PathVariable @Valid String cpf_prof){
+    public ResponseEntity<Profissional> updateProfissional(@RequestBody @Valid ProfissionalDtoPatch data,
+                                                           @PathVariable @Valid String cpf_prof) {
         return profissionalRepository.findById(cpf_prof)
                 .map(result -> {
                     result.setTelefoneProf(data.tel());
                     result.setDescProf(data.descricao());
                     result.setEmailProf(data.email());
                     result.setSenha(data.senha());
-                    result.setCpfProf(data.cpf());
                     result.setNomeProf(data.nome());
                     result.setCrp(data.crp());
                     result.setEnderecoProf(data.endereco());
@@ -71,6 +74,7 @@ public class ProfissionalController {
                 })
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
 
     @DeleteMapping("/{cpf_prof}")
     public ResponseEntity<Void> deleteProfissional(@PathVariable @Valid String cpf_prof) {

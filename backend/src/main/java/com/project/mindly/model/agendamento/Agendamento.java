@@ -1,6 +1,8 @@
 package com.project.mindly.model.agendamento;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.model.sessao.Sessao;
@@ -48,16 +50,19 @@ public class Agendamento {
     @NotNull
     private AgendamentoStatus status = AgendamentoStatus.PENDENTE;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cpf_prof", nullable = false)
     @NotNull
+    @JsonManagedReference
     private Profissional cpfProfAgendamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cpf_paciente", nullable = false)
     @NotNull
+    @JsonManagedReference
     private Paciente cpfPacienteAgendamento;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "agendamentoSessao", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Sessao> sessoes = new HashSet<>();
 

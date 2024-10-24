@@ -59,9 +59,11 @@ public class Profissional {
     private Set<Agenda> agendas = new HashSet<>();
 
     @OneToMany(mappedBy = "cpfProfAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Agendamento> agendamentos = new HashSet<>();
 
     @OneToMany(mappedBy = "cpfProfSessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Sessao> sessoes = new HashSet<>();
 
 
