@@ -64,6 +64,7 @@
 .separator {
   width: 1px;
   height: 160%;
+  align-items: center;
   background-color: var(--blue-500);
-  margin: 0 auto;
+  margin-left: 2rem;
 }

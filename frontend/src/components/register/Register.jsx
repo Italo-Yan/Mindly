@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Register.module.css";
 
 export function Register() {
@@ -12,7 +13,9 @@ export function Register() {
         <div className={styles.separator}></div>
         <div className={styles.registerSection}>
           <h3 className={styles.subtitle}>ESPECIFICAÇÕES PROFISSIONAL</h3>
+          <NavLink className={styles.buttonContainer} to={"/professional"}>
           <button className={styles.button}>PROFISSIONAL</button>
+          </NavLink>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { isEmail } from "validator";
 
-const Profissional = () => {
+export const Professional = () => {
   const {
     register,
     handleSubmit,
@@ -134,4 +134,3 @@ const Profissional = () => {
   );
 };
 
-export default Profissional;
