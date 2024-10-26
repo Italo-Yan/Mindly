@@ -1,10 +1,13 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 
 export function Header() {
   return (
     <>
       <header className={styles.header}>
-        <h1>Mindly</h1>
+        <NavLink to={"/"}>
+          <h1>Mindly</h1>
+        </NavLink>
 
         <ul>
           <li><a href="#home">Início</a></li>
@@ -13,9 +16,11 @@ export function Header() {
           <li><a href="#contact">Contato</a></li>
         </ul>
 
-        <div className={styles.buttonContainer}>
-          <button>CADASTRE-SE</button>
-          <button>LOGIN</button>
+        <div>
+          <NavLink className={styles.buttonContainer} to={"/register"}>
+            <button aria-label="Cadastre-se">CADASTRE-SE</button>
+            <button aria-label="Cadastre-se">LOGIN</button>
+          </NavLink>
         </div>
       </header>
 
