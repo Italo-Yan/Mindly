@@ -25,6 +25,10 @@ a {
   text-decoration: none;
 }
 
+ul {
+  margin-left: 12.5rem;
+}
+
 ul li a {
   opacity: 0.5;
 }
@@ -41,6 +45,7 @@ ul li a:hover {
 button {
   color: var(--blue-300);
   background: transparent;
+  transition: background 0.3s, color 0.3s;
   border-radius: 2.5rem;
   border: 2px solid var(--blue-500);
   gap: 0.6rem;

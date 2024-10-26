@@ -1,7 +1,7 @@
-import { Cadastro } from "../../components/cadastro/Cadastro"
+import { Register } from "../../components/register/Register"
 
-export function Register() {
+export function RegisterPage() {
   return (
-    <Cadastro />
+    <Register />
   )
 }
