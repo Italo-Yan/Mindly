@@ -44,6 +44,8 @@ desmarcar;
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "react-hook-form": "^7.53.1",
+    "react-router-dom": "^6.27.0",
     "web-vitals": "^2.1.4"
 ```
 
