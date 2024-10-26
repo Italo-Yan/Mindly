@@ -1,6 +1,7 @@
 package com.project.mindly.model.paciente;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.mindly.model.agendamento.Agendamento;
 import com.project.mindly.model.sessao.Sessao;
 import jakarta.persistence.*;
@@ -23,11 +24,11 @@ public class Paciente {
 
     @Column(name = "nome_paciente", length = 155, nullable = false)
     @NotNull
-    @Email
     private String nomePaciente;
 
     @Column(name = "email_paciente", length = 155, nullable = false)
     @NotNull
+    @Email
     @Size(min = 11, max = 155)
     private String emailPaciente;
 
@@ -50,9 +51,11 @@ public class Paciente {
     private String telPaciente;
 
     @OneToMany(mappedBy = "cpfPacienteAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Agendamento> agendamentoPaciente = new HashSet<>();
 
     @OneToMany(mappedBy = "cpfPacienteSessao", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Sessao> sessaoPaciente = new HashSet<>();
 
     public @NotNull @Size(min = 11, max = 20) String getCpfPaciente() {
@@ -63,11 +66,11 @@ public class Paciente {
         this.cpfPaciente = cpfPaciente;
     }
 
-    public @NotNull @Email String getNomePaciente() {
+    public @NotNull String getNomePaciente() {
         return nomePaciente;
     }
 
-    public void setNomePaciente(@NotNull @Email String nomePaciente) {
+    public void setNomePaciente(@NotNull String nomePaciente) {
         this.nomePaciente = nomePaciente;
     }
 
