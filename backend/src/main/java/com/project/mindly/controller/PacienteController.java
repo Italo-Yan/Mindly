@@ -4,8 +4,12 @@ package com.project.mindly.controller;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.paciente.PacienteDto;
 import com.project.mindly.model.paciente.PacienteDtoPatch;
-import com.project.mindly.repository.PacienteRepository;
+import com.project.mindly.service.PacienteService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,72 +17,70 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/paciente")
+@RequestMapping("/paciente")
 public class PacienteController {
 
-    private final PacienteRepository pacienteRepository;
 
-    public PacienteController(PacienteRepository pacienteRepository) {
-        this.pacienteRepository = pacienteRepository;
+    private final PacienteService pacienteService;
+    private static final Logger logger = LoggerFactory.getLogger(PacienteController.class);
+
+
+    public PacienteController(PacienteService pacienteService) {
+        this.pacienteService = pacienteService;
     }
 
     @GetMapping
     public List<Paciente> findAllPaciente() {
-        return pacienteRepository.findAll();
+        List<Paciente> pacientes = pacienteService.findAllPaciente();
+        logger.info("Total de pacientes retornados: {}", pacientes.size());
+        return pacientes;
     }
 
-    @GetMapping("/{cpfPaciente}")
-    public ResponseEntity<Paciente> findByIdPaciente(@PathVariable @Valid String cpfPaciente) {
-        return pacienteRepository.findById(cpfPaciente)
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Paciente> findByIdPaciente(@PathVariable @Valid String cpf) {
+        return pacienteService.findPacienteById(cpf)
                 .map( result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create") // método base para replicar nos outros
     public ResponseEntity<Paciente> createPaciente(@RequestBody @Valid PacienteDto data) {
         try {
-            Paciente paciente = new Paciente();
-            paciente.setCpfPaciente(data.cpf_paciente());
-            paciente.setNomePaciente(data.nome_paciente());
-            paciente.setEmailPaciente(data.email_paciente());
-            paciente.setSenha(data.senha());
-            paciente.setNascimento(data.nascimento());
-            paciente.setMedicacao(data.medicacao());
-            paciente.setEndPaciente(data.endereco_paciente());
-            paciente.setTelPaciente(data.telefone_paciente());
-            pacienteRepository.save(paciente);
+            Paciente paciente = pacienteService.savePaciente(data);
             return ResponseEntity.status(HttpStatus.CREATED).body(paciente);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PatchMapping("/{cpfPaciente}")
-    public ResponseEntity<Paciente> updatePaciente(@RequestBody @Valid PacienteDtoPatch data, @PathVariable @Valid String cpfPaciente) {
 
-        return pacienteRepository.findById(cpfPaciente)
-                .map(result -> {
-                    result.setNomePaciente(data.nome_paciente());
-                    result.setEmailPaciente(data.email_paciente());
-                    result.setSenha(data.senha());
-                    result.setNascimento(data.nascimento());
-                    result.setMedicacao(data.medicacao());
-                    result.setEndPaciente(data.endereco_paciente());
-                    result.setTelPaciente(data.telefone_paciente());
-                    pacienteRepository.save(result);
-                    return ResponseEntity.status(HttpStatus.OK).body(result);
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+    @PatchMapping("/{cpf}")
+    public ResponseEntity<Paciente> updatePaciente(@RequestBody @Valid PacienteDtoPatch data,
+                                                   @PathVariable @Valid String cpf) {
+        try {
+            Paciente updatedPaciente = pacienteService.updatePaciente(cpf, data);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedPaciente);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e) {
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    @DeleteMapping("/{cpfPaciente}")
-    public ResponseEntity<Void> deletePaciente(@PathVariable @Valid String cpfPaciente) {
-        return pacienteRepository.findById(cpfPaciente)
-                .map(result -> {
-                    pacienteRepository.delete(result);
-                    return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<String> deletePaciente(@PathVariable @Valid String cpf) {
+        try {
+            pacienteService.deletePaciente(cpf);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
+
 }

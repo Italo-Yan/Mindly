@@ -26,17 +26,17 @@ public class Sessao {
     @NotNull
     private int qnt_total = 0;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cpf_prof", nullable = false)
     @NotNull
     private Profissional cpfProfSessao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cpf_paciente", nullable = false)
     @NotNull
     private Paciente cpfPacienteSessao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_agendamento", nullable = false)
     @NotNull
     private Agendamento agendamentoSessao;
@@ -45,11 +45,6 @@ public class Sessao {
     public int getId() {
         return id;
     }
-
-    public void setId(@NotNull int id) {
-        this.id = id;
-    }
-
     public @NotNull LocalDate getDataSessao() {
         return dataSessao;
     }

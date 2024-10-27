@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/agenda")
+@RequestMapping("/agenda")
 public class AgendaController {
 
 
@@ -33,9 +33,9 @@ public class AgendaController {
         return agendaRepository.findAll();
     }
 
-    @GetMapping("/{idAgenda}")
-    public ResponseEntity<Agenda> getAgendaById(@PathVariable @Valid int idAgenda) {
-        return agendaRepository.findById(idAgenda)
+    @GetMapping("/{id}")
+    public ResponseEntity<Agenda> getAgendaById(@PathVariable @Valid int id) {
+        return agendaRepository.findById(id)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -63,11 +63,11 @@ public class AgendaController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PatchMapping("/{idAgenda}")
-    public ResponseEntity<Agenda> updateAgenda(@RequestBody @Valid AgendaDto data, @PathVariable int idAgenda) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Agenda> updateAgenda(@RequestBody @Valid AgendaDto data, @PathVariable int id) {
         Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
         if (cpfProf != null) {
-            return agendaRepository.findById(idAgenda)
+            return agendaRepository.findById(id)
                     .map(result -> {
                         result.setCpfProfAgenda(cpfProf);
                         result.setAtivo(data.ativo());
@@ -84,9 +84,9 @@ public class AgendaController {
 
     }
 
-    @DeleteMapping("/{idAgenda}")
-    public ResponseEntity<Void> deleteAgenda(@PathVariable @Valid int idAgenda) {
-        return agendaRepository.findById(idAgenda)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAgenda(@PathVariable @Valid int id) {
+        return agendaRepository.findById(id)
                 .map(result -> {
                     agendaRepository.delete(result);
                     return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();

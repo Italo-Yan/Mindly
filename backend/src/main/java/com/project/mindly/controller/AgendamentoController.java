@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/agendamento")
+@RequestMapping("/agendamento")
 public class AgendamentoController {
 
     private final AgendamentoRepository agendamentoRepository;
@@ -39,9 +39,9 @@ public class AgendamentoController {
         return agendamentoRepository.findAll();
     }
 
-    @GetMapping("/{idAgendamento}")
-    public ResponseEntity<Agendamento> getByIdAgendamento(@PathVariable @Valid int idAgendamento) {
-        return agendamentoRepository.findById(idAgendamento)
+    @GetMapping("/{id}")
+    public ResponseEntity<Agendamento> getByIdAgendamento(@PathVariable @Valid int id) {
+        return agendamentoRepository.findById(id)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -73,12 +73,13 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PatchMapping("/{idAgendamento}")
-    public ResponseEntity<Agendamento> updateAgendamento(@RequestBody @Valid AgendamentoDto data,@PathVariable int idAgendamento) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Agendamento> updateAgendamento(@RequestBody @Valid AgendamentoDto data,
+                                                         @PathVariable int id) {
         try {
             Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
             Paciente cpfPaci = pacienteRepository.findByCpfPaciente(data.cpf_paciente());
-            return agendamentoRepository.findById(idAgendamento)
+            return agendamentoRepository.findById(id)
                     .map(result -> {
                         result.setCpfProfAgendamento(cpfProf);
                         result.setCpfPacienteAgendamento(cpfPaci);
@@ -99,9 +100,9 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @DeleteMapping("/{idAgendamento}")
-    public ResponseEntity<Void> deleteAgendamento(@PathVariable @Valid int idAgendamento) {
-        return agendamentoRepository.findById(idAgendamento)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAgendamento(@PathVariable @Valid int id) {
+        return agendamentoRepository.findById(id)
                 .map(result -> {
                     agendamentoRepository.delete(result);
                     return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();

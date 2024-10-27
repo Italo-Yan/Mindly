@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/profissional")
+@RequestMapping("/profissional")
 public class ProfissionalController {
 
 
@@ -28,9 +28,9 @@ public class ProfissionalController {
         return profissionalRepository.findAll();
     }
 
-    @GetMapping("/{cpf_prof}")
-    public ResponseEntity<Profissional> getByCpfProfissional(@PathVariable @Valid String cpf_prof) {
-        return profissionalRepository.findById(cpf_prof)
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Profissional> getByCpfProfissional(@PathVariable @Valid String cpf) {
+        return profissionalRepository.findById(cpf)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -56,10 +56,10 @@ public class ProfissionalController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PatchMapping("/{cpf_prof}")
+    @PatchMapping("/{cpf}")
     public ResponseEntity<Profissional> updateProfissional(@RequestBody @Valid ProfissionalDtoPatch data,
-                                                           @PathVariable @Valid String cpf_prof) {
-        return profissionalRepository.findById(cpf_prof)
+                                                           @PathVariable @Valid String cpf) {
+        return profissionalRepository.findById(cpf)
                 .map(result -> {
                     result.setTelefoneProf(data.tel());
                     result.setDescProf(data.descricao());
@@ -76,9 +76,9 @@ public class ProfissionalController {
     }
 
 
-    @DeleteMapping("/{cpf_prof}")
-    public ResponseEntity<Void> deleteProfissional(@PathVariable @Valid String cpf_prof) {
-        return profissionalRepository.findById(cpf_prof)
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<Void> deleteProfissional(@PathVariable @Valid String cpf) {
+        return profissionalRepository.findById(cpf)
                 .map(result -> {
                     profissionalRepository.delete(result);
                     return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();

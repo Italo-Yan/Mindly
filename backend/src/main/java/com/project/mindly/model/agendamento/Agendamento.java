@@ -22,7 +22,7 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @NotNull
-    private int id;
+    private int idAgendamento;
 
     @Column(name = "data_agendamento", nullable = false)
     @NotNull
@@ -67,12 +67,8 @@ public class Agendamento {
     private Set<Sessao> sessoes = new HashSet<>();
 
     @NotNull
-    public int getId() {
-        return id;
-    }
-
-    public void setId(@NotNull int id) {
-        this.id = id;
+    public int getIdAgendamento() {
+        return idAgendamento;
     }
 
     public @NotNull LocalDate getDataAgendamento() {
