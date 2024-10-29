@@ -1,136 +1,195 @@
-import { useForm } from "react-hook-form";
-import { isEmail } from "validator";
+import { useState } from "react";
+import * as zod from "zod";
+import styles from "./Form.module.css";
+
+
+const cadastroSchema = zod.object({
+  nomeCompleto: zod
+    .string()
+    .min(15, { message: "Deve conter no mínimo 15 caracteres." })
+    .max(100, { message: "Deve conter no máximo 100 caracteres." }),
+  cpf: zod
+    .string()
+    .min(11, { message: "O CPF deve conter 11 dígitos." })
+    .max(11, { message: "O CPF deve conter 11 dígitos." })
+    .regex(/^\d+$/, { message: "O CPF deve conter apenas números." }),
+  crp: zod
+    .string()
+    .min(8, { message: "O CRP deve conter 8 caracteres." })
+    .max(8, { message: "O CRP deve conter 8 caracteres." }),
+  abordagemTeorica: zod
+    .string()
+    .min(4, { message: "Deve conter no mínimo 4 caracteres." })
+    .max(15, { message: "Deve conter no máximo 15 caracteres." }),
+  email: zod
+    .string()
+    .email({ message: "Formato de e-mail inválido." }),
+  senha: zod
+    .string()
+    .min(8, { message: "A senha deve ter pelo menos 8 caracteres." }),
+  telefone: zod
+    .string()
+    .min(10, { message: "O telefone deve conter no mínimo 10 dígitos." })
+    .max(11, { message: "O telefone deve conter no máximo 11 dígitos." })
+    .regex(/^\d+$/, { message: "O telefone deve conter apenas números." }),
+  descricao: zod
+    .string()
+    .optional(),
+});
 
 export const Professional = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const [formData, setFormData] = useState({
+    nomeCompleto: '',
+    cpf: '',
+    crp: '',
+    abordagemTeorica: '',
+    email: '',
+    senha: '',
+    telefone: '',
+    descricao: '',
+  });
 
-  const watchPassword = watch("password");
+  const [errors, setErrors] = useState({});
 
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  console.log("RENDER");
+  const resetForm = () => {
+    setFormData({
+      nomeCompleto: '',
+      cpf: '',
+      crp: '',
+      abordagemTeorica: '',
+      email: '',
+      senha: '',
+      telefone: '',
+      descricao: '',
+    });
+    setErrors({});
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validation = cadastroSchema.safeParse(formData);
+
+    if (validation.success) {
+      console.log("Cadastro bem sucedido", formData);
+      resetForm();
+    } else {
+      const fieldErrors = {};
+      validation.error.errors.forEach((error) => {
+        fieldErrors[error.path[0]] = error.message;
+      });
+      setErrors(fieldErrors);
+      console.log("Erro de validação:", fieldErrors);
+    }
+  };
 
   return (
-    <div className="app-container">
-      <div className="form-group">
-        <label>Name</label>
+    <div>
+    <h2 className={styles.formTitle}>Cadastro</h2>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="nomeCompleto">Nome Completo</label>
         <input
-          className={errors?.name && "input-error"}
+          className={styles.input}
           type="text"
-          placeholder="Your name"
-          {...register("name", { required: true })}
+          id="nomeCompleto"
+          name="nomeCompleto"
+          value={formData.nomeCompleto}
+          onChange={handleChange}
         />
-        {errors?.name?.type === "required" && (
-          <p className="error-message">Name is required.</p>
-        )}
+        {errors.nomeCompleto && <p className={styles.errorText}>{errors.nomeCompleto}</p>}
       </div>
-
-      <div className="form-group">
-        <label>E-mail</label>
+      <div>
+        <label htmlFor="cpf">CPF</label>
         <input
-          className={errors?.email && "input-error"}
+          className={styles.input}
+          type="text"
+          id="cpf"
+          name="cpf"
+          value={formData.cpf}
+          onChange={handleChange}
+        />
+        {errors.cpf && <p className={styles.errorText}>{errors.cpf}</p>}
+      </div>
+      <div>
+        <label htmlFor="crp">CRP</label>
+        <input
+          className={styles.input}
+          type="text"
+          id="crp"
+          name="crp"
+          value={formData.crp}
+          onChange={handleChange}
+        />
+        {errors.crp && <p className={styles.errorText}>{errors.crp}</p>}
+      </div>
+      <div>
+        <label htmlFor="abordagemTeorica">Abordagem Teórica</label>
+        <input
+          className={styles.input}
+          type="text"
+          id="abordagemTeorica"
+          name="abordagemTeorica"
+          value={formData.abordagemTeorica}
+          onChange={handleChange}
+        />
+        {errors.abordagemTeorica && <p className={styles.errorText}>{errors.abordagemTeorica}</p>}
+      </div>
+      <div>
+        <label htmlFor="email">E-mail</label>
+        <input
+          className={styles.input}
           type="email"
-          placeholder="Your e-mail"
-          {...register("email", {
-            required: true,
-            validate: (value) => isEmail(value),
-          })}
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
         />
-        {errors?.email?.type === "required" && (
-          <p className="error-message">Email is required.</p>
-        )}
-
-        {errors?.email?.type === "validate" && (
-          <p className="error-message">Email is invalid.</p>
-        )}
+        {errors.email && <p className={styles.errorText}>{errors.email}</p>}
       </div>
-
-      <div className="form-group">
-        <label>Password</label>
+      <div>
+        <label htmlFor="senha">Senha</label>
         <input
-          className={errors?.password && "input-error"}
+          className={styles.input}
           type="password"
-          placeholder="Password"
-          {...register("password", { required: true, minLength: 7 })}
+          id="senha"
+          name="senha"
+          value={formData.senha}
+          onChange={handleChange}
         />
-
-        {errors?.password?.type === "required" && (
-          <p className="error-message">Password is required.</p>
-        )}
-
-        {errors?.password?.type === "minLength" && (
-          <p className="error-message">
-            Password needs to have at least 7 characters.
-          </p>
-        )}
+        {errors.senha && <p className={styles.errorText}>{errors.senha}</p>}
       </div>
-
-      <div className="form-group">
-        <label>Password confirmation</label>
+      <div>
+        <label htmlFor="telefone">Telefone</label>
         <input
-          className={errors?.passwordConfirmation && "input-error"}
-          type="password"
-          placeholder="Repeat your password"
-          {...register("passwordConfirmation", {
-            required: true,
-            validate: (value) => value === watchPassword,
-          })}
+          className={styles.input}
+          type="text"
+          id="telefone"
+          name="telefone"
+          value={formData.telefone}
+          onChange={handleChange}
         />
-        {errors?.passwordConfirmation?.type === "required" && (
-          <p className="error-message">Password confirmation is required.</p>
-        )}
-
-        {errors?.passwordConfirmation?.type === "validate" && (
-          <p className="error-message">Passwords does not match.</p>
-        )}
+        {errors.telefone && <p className={styles.errorText}>{errors.telefone}</p>}
       </div>
-      <div className="form-group">
-        <label>Profession</label>
-        <select
-          className={errors?.profession && "input-error"}
-          defaultValue="0"
-          {...register("profession", { validate: (value) => value !== "0" })}
-        >
-          <option value="0">Select your profession...</option>
-          <option value="developer">Developer</option>
-          <option value="other">Other</option>
-        </select>
-
-        {errors?.profession?.type === "validate" && (
-          <p className="error-message">Profession is required.</p>
-        )}
+      <div>
+        <label htmlFor="descricao">Descrição (opcional)</label>
+        <textarea
+          className={styles.textarea}
+          id="descricao"
+          name="descricao"
+          value={formData.descricao}
+          onChange={handleChange}
+        />
       </div>
-
-      <div className="form-group">
-        <div className="checkbox-group">
-          <input
-            type="checkbox"
-            name="privacy-policy"
-            {...register("privacyTerms", {
-              validate: (value) => value === true,
-            })}
-          />
-          <label>I agree with the privacy terms.</label>
-        </div>
-
-        {errors?.privacyTerms?.type === "validate" && (
-          <p className="error-message">
-            You must agree with the privacy terms.
-          </p>
-        )}
-      </div>
-
-      <div className="form-group">
-        <button onClick={() => handleSubmit(onSubmit)()}>Criar conta</button>
-      </div>
-    </div>
-  );
+      <button className={styles.button} type="submit">Cadastrar</button>
+    </form>
+  </div>
+);
 };
-
