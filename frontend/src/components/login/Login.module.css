@@ -1,0 +1,81 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--blue-100);
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--beige);
+
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  width: 500px;
+  height: 600px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  color: var(--blue-500);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.label {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  color: var(--blue-500);
+}
+
+.input {
+  padding: 0.8rem;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--blue-300);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50%;
+  padding: 0.8rem;
+  border: 1px solid var(--blue-500);
+  border-radius: 20px;
+
+  background-color: var(--white);
+  color: var(--blue-500);
+
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin: 80px auto 0 auto;
+}
+
+.button:hover {
+  background-color: var(--blue-100);
+}
+
+.error {
+  color: var(--red);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}

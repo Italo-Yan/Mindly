@@ -1,12 +1,13 @@
+import { Descripton } from "../../components/description/Description";
 import { Box } from "../../components/box/Box";
 import { Services } from "../../components/services/Services";
 import { About } from "../../components/about/About";
 import { Contact } from "../../components/contact/Contact";
-// import { Cadastro } from "./components/cadastro/Cadastro";
 
 export function Home() {
   return (
     <div>
+      <Descripton />
       <section id="home">
         <Box />
       </section>

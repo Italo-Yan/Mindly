@@ -1,40 +1,62 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 
 export function Header() {
+  const navigate = useNavigate();
+
+  const handleNavigation = (sectionId, event) => {
+    if (event) event.preventDefault();
+
+    navigate("/", { replace: true });
+    setTimeout(() => {
+      window.location.hash = sectionId;
+    }, 50);
+  };
+
   return (
     <>
       <header className={styles.header}>
-        <NavLink to={"/"}>
+        <NavLink to="/">
           <h1>Mindly</h1>
         </NavLink>
 
         <ul>
-          <li><a href="#home">Início</a></li>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#services">Serviços</a></li>
-          <li><a href="#contact">Contato</a></li>
-          <li><a href="#search">Buscar Profissionais</a></li>
+          <li>
+            <a href="#home" onClick={(event) => handleNavigation("home", event)}>
+              Início
+            </a>
+          </li>
+          <li>
+            <a href="#about" onClick={(event) => handleNavigation("about", event)}>
+              Sobre
+            </a>
+          </li>
+          <li>
+            <a href="#services" onClick={(event) => handleNavigation("services", event)}>
+              Serviços
+            </a>
+          </li>
+          <li>
+            <a href="#contact" onClick={(event) => handleNavigation("contact", event)}>
+              Contato
+            </a>
+          </li>
+          <li>
+            <NavLink to="/explorer">
+              Buscar Profissionais
+            </NavLink>
+          </li>
         </ul>
 
-        <div>
-          <NavLink className={styles.buttonContainer} to={"/register"}>
-            <button aria-label="Cadastre-se">CADASTRE-SE</button>
-            <button aria-label="Cadastre-se">LOGIN</button>
+        <div className={styles.buttonContainer}>
+          <NavLink to="/register">
+            <button className={styles.button} aria-label="Cadastre-se">CADASTRE-SE</button>
+          </NavLink>
+          <NavLink to="/login">
+            <button className={styles.button} aria-label="Login">LOGIN</button>
           </NavLink>
         </div>
       </header>
-
-      <main className={styles.text}>
-        <p>Receba as nossas boas-vindas</p>
-        <h1>
-          Organização, agendamento e contato! <br />
-          Tudo em um só lugar.
-        </h1>
-
-        <button>SAIBA MAIS</button>
-
-      </main>
     </>
   );
 }

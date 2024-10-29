@@ -18,15 +18,12 @@ ul {
   margin: 0;
   padding: 0;
   font-size: 1rem;
+  margin-left: 12.5rem;
 }
 
 a {
   color: var(--blue-500);
   text-decoration: none;
-}
-
-ul {
-  margin-left: 12.5rem;
 }
 
 ul li a {
@@ -42,7 +39,7 @@ ul li a:hover {
   gap: 2.1rem;
 }
 
-button {
+.button {
   color: var(--blue-300);
   background: transparent;
   transition: background 0.3s, color 0.3s;
@@ -53,7 +50,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.button:hover {
   background: var(--white);
 }
 
