@@ -2,6 +2,7 @@ package com.project.mindly.model.view;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name ="vw_profissional_publico")
@@ -16,6 +17,7 @@ public class ProfissionalPublicoView {
     private String nomeProf;
 
     @Column(name = "email_prof",length = 155)
+    @Email
     private String emailProf;
 
     @Column(name = "abordagem_teorica")
