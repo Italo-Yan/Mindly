@@ -1,5 +1,5 @@
 
-INSERT INTO tb_profissional (cpf_prof, nome_prof, crp, email_prof, senha, descricao_prof, especialidade, endereco_prof, telefone_prof)
+INSERT INTO tb_profissional (cpf_prof, nome_prof, crp, email_prof, senha, descricao_prof, abordagem_teorica, endereco_prof, telefone_prof)
 VALUES ('12345678900', 'Eugenia Campos Barros', '123456', 'eugenia.campos@example.com', '$2y$10$EXAMPLE_HASHED_PASSWORD', 'Psicóloga com 10 anos de experiência.', 'Psicologia Clínica', 'Rua das Flores, 123, São Paulo, SP', '(11) 91234-5678');
 
 INSERT INTO tb_paciente (cpf_paciente, nome_paciente, email_paciente, senha, nascimento, medicacao, endereco_paciente, telefone_paciente)

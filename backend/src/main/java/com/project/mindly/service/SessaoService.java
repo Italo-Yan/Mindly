@@ -1,12 +1,12 @@
 package com.project.mindly.service;
 
 import com.project.mindly.model.agendamento.Agendamento;
-import com.project.mindly.model.agendamento.AgendamentoDtoResponse;
+import com.project.mindly.dtos.agendamento.AgendamentoDtoResponse;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.model.sessao.Sessao;
-import com.project.mindly.model.sessao.SessaoDto;
-import com.project.mindly.model.sessao.SessaoDtoResponse;
+import com.project.mindly.dtos.sessao.SessaoDto;
+import com.project.mindly.dtos.sessao.SessaoDtoResponse;
 import com.project.mindly.repository.AgendamentoRepository;
 import com.project.mindly.repository.PacienteRepository;
 import com.project.mindly.repository.ProfissionalRepository;
@@ -27,7 +27,7 @@ public class SessaoService {
     private final ProfissionalRepository profissionalRepository;
     private final AgendamentoRepository agendamentoRepository;
 
-    @Autowired
+
     public SessaoService(SessaoRepository sessaoRepository,
                          PacienteRepository pacienteRepository,
                          ProfissionalRepository profissionalRepository, AgendamentoRepository agendamentoRepository) {
@@ -49,20 +49,12 @@ public class SessaoService {
 
     public Sessao saveSessao(SessaoDto data) {
 
-        Paciente cpfPaci = pacienteRepository.findByCpfPaciente(data.cpf_paciente());
-        if (cpfPaci == null) {
-            throw new EntityNotFoundException("Paciente não encontrado com CPF: " + data.cpf_paciente());
-        }
-
-        Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
-        if (cpfProf == null) {
-            throw new EntityNotFoundException("Paciente não encontrado com CPF: " + data.cpf_paciente());
-        }
-
-        Agendamento idAgenda = agendamentoRepository.findByIdAgendamento(data.id_agendamento());
-        if (idAgenda == null) {
-            throw new EntityNotFoundException("Paciente não encontrado com CPF: " + data.id_agendamento());
-        }
+        Paciente cpfPaci = pacienteRepository.findById(data.cpf_paciente())
+                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com CPF: " + data.cpf_paciente()));
+        Profissional cpfProf = profissionalRepository.findById(data.cpf_prof())
+                .orElseThrow(() -> new EntityNotFoundException("Profissional não encontrado com CPF: " + data.cpf_prof()));
+        Agendamento idAgenda = agendamentoRepository.findById(data.id_agendamento())
+                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com CPF: " + data.id_agendamento()));
 
         Sessao sessao = new Sessao();
         sessao.setAgendamentoSessao(idAgenda);
@@ -93,10 +85,9 @@ public class SessaoService {
                 .orElseThrow(() -> new EntityNotFoundException("Sessao não encontrado com o ID: " + id));
     }
 
-
     public void deleteSessao(int id) {
         Sessao sessao = sessaoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Agendamento não encontrado com ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Sessao não encontrado com ID: " + id));
         sessaoRepository.delete(sessao);
     }
 

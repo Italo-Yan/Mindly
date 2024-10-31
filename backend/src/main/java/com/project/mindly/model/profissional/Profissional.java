@@ -45,8 +45,8 @@ public class Profissional {
     @Column(name = "descricao_prof", length = 500)
     private String descProf;
 
-    @Column(name = "especialidade")
-    private String especialidade;
+    @Column(name = "abordagem_teorica")
+    private String abordagemTeorica;
 
     @Column(name = "endereco_prof")
     private String enderecoProf;
@@ -115,12 +115,12 @@ public class Profissional {
         this.descProf = descricaoProf;
     }
 
-    public @Size(max = 255) String getEspecialidade() {
-        return especialidade;
+    public @Size(max = 255) String getAbordagemTeorica() {
+        return abordagemTeorica;
     }
 
-    public void setEspecialidade(@Size(max = 255) String especialidade) {
-        this.especialidade = especialidade;
+    public void setAbordagemTeorica(@Size(max = 255) String especialidade) {
+        this.abordagemTeorica = especialidade;
     }
 
     public @Size(max = 255) String getEnderecoProf() {

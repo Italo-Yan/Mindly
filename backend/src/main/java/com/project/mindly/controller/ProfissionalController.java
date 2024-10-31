@@ -2,10 +2,15 @@ package com.project.mindly.controller;
 
 
 import com.project.mindly.model.profissional.Profissional;
-import com.project.mindly.model.profissional.ProfissionalDto;
-import com.project.mindly.model.profissional.ProfissionalDtoPatch;
-import com.project.mindly.repository.ProfissionalRepository;
+import com.project.mindly.dtos.profissional.ProfissionalDto;
+import com.project.mindly.dtos.profissional.ProfissionalDtoPatch;
+import com.project.mindly.service.ProfissionalService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,73 +22,65 @@ import java.util.List;
 public class ProfissionalController {
 
 
-    private final ProfissionalRepository profissionalRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ProfissionalController.class);
+    private final ProfissionalService profissionalService;
 
-    public ProfissionalController(ProfissionalRepository profissionalRepository) {
-        this.profissionalRepository = profissionalRepository;
+    @Autowired
+    public ProfissionalController(ProfissionalService profissionalService) {
+        this.profissionalService = profissionalService;
     }
 
     @GetMapping
     public List<Profissional> getProfissionalAll() {
-        return profissionalRepository.findAll();
+        List<Profissional> profissional = profissionalService.findAllProfissional();
+        logger.info("Total Profissionals : " + profissional.size());
+        return profissional;
     }
 
     @GetMapping("/{cpf}")
     public ResponseEntity<Profissional> getByCpfProfissional(@PathVariable @Valid String cpf) {
-        return profissionalRepository.findById(cpf)
+        return profissionalService.findProfissionalById(cpf)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Profissional> createProfissional (@RequestBody @Valid ProfissionalDto prfDto) {
+    public ResponseEntity<Profissional> createProfissional (@RequestBody @Valid ProfissionalDto data) {
         try {
-            Profissional prof = new Profissional();
-            prof.setCpfProf(prfDto.cpf());
-            prof.setNomeProf(prfDto.nome());
-            prof.setCrp(prfDto.crp());
-            prof.setEmailProf(prfDto.email());
-            prof.setSenha(prfDto.senha());
-            prof.setDescProf(prfDto.descricao());
-            prof.setEspecialidade(prfDto.especialidade());
-            prof.setEnderecoProf(prfDto.endereco());
-            prof.setTelefoneProf(prfDto.tel());
-            profissionalRepository.save(prof);
-            return ResponseEntity.status(HttpStatus.CREATED).body(prof);
+            Profissional profissional = profissionalService.saveProfissional(data);
+            return ResponseEntity.status(HttpStatus.CREATED).body(profissional);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
 
     @PatchMapping("/{cpf}")
     public ResponseEntity<Profissional> updateProfissional(@RequestBody @Valid ProfissionalDtoPatch data,
                                                            @PathVariable @Valid String cpf) {
-        return profissionalRepository.findById(cpf)
-                .map(result -> {
-                    result.setTelefoneProf(data.tel());
-                    result.setDescProf(data.descricao());
-                    result.setEmailProf(data.email());
-                    result.setSenha(data.senha());
-                    result.setNomeProf(data.nome());
-                    result.setCrp(data.crp());
-                    result.setEnderecoProf(data.endereco());
-                    result.setEspecialidade(data.especialidade());
-                    profissionalRepository.save(result);
-                    return ResponseEntity.status(HttpStatus.OK).body(result);
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+        try{
+            Profissional profissional = profissionalService.updateProfissional(cpf,data);
+            return ResponseEntity.status(HttpStatus.OK).body(profissional);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e) {
+            logger.error("Ocorreu um error inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-
     @DeleteMapping("/{cpf}")
-    public ResponseEntity<Void> deleteProfissional(@PathVariable @Valid String cpf) {
-        return profissionalRepository.findById(cpf)
-                .map(result -> {
-                    profissionalRepository.delete(result);
-                    return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<String> deleteProfissional(@PathVariable @Valid String cpf) {
+        try {
+            profissionalService.deleteProfissional(cpf);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 }

@@ -1,47 +1,54 @@
 package com.project.mindly.controller;
 
 
+import com.project.mindly.dtos.agendamento.AgendamentoConfirmeDto;
 import com.project.mindly.model.agendamento.Agendamento;
-import com.project.mindly.model.agendamento.AgendamentoDto;
+import com.project.mindly.dtos.agendamento.AgendamentoDto;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.AgendamentoRepository;
 import com.project.mindly.repository.PacienteRepository;
 import com.project.mindly.repository.ProfissionalRepository;
+import com.project.mindly.service.AgendamentoService;
+import com.project.mindly.service.PacienteService;
+import com.project.mindly.service.ProfissionalService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @RestController
 @RequestMapping("/agendamento")
 public class AgendamentoController {
 
-    private final AgendamentoRepository agendamentoRepository;
 
-    private final ProfissionalRepository profissionalRepository;
+    private static final Logger logger = LoggerFactory.getLogger(AgendamentoController.class);
+    private final AgendamentoService agendamentoService;
 
-    private final PacienteRepository pacienteRepository;
+    @Autowired
+    public AgendamentoController(AgendamentoService agendamentoService) {
+        this.agendamentoService = agendamentoService;
 
-    public AgendamentoController(AgendamentoRepository agendamentoRepository,
-                                 ProfissionalRepository profissionalRepository,
-                                 PacienteRepository pacienteRepository) {
-        this.agendamentoRepository = agendamentoRepository;
-        this.profissionalRepository = profissionalRepository;
-        this.pacienteRepository = pacienteRepository;
     }
-
 
     @GetMapping
     public List<Agendamento> getAllAgendamento() {
-        return agendamentoRepository.findAll();
+        List<Agendamento> agendamento = agendamentoService.findAllAgendamento();
+        logger.info("Total de agendamentos retornados: {}",agendamento.size());
+        return agendamento;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Agendamento> getByIdAgendamento(@PathVariable @Valid int id) {
-        return agendamentoRepository.findById(id)
+        return agendamentoService.findAgendamentoById(id)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -49,65 +56,51 @@ public class AgendamentoController {
     @PostMapping("/create")
     public ResponseEntity<Agendamento> createAgendamento(@RequestBody @Valid AgendamentoDto data) {
         try {
-            Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
-            Paciente cpfPaci = pacienteRepository.findByCpfPaciente(data.cpf_paciente());
-            if(cpfProf != null && cpfPaci != null) {
-                Agendamento agend = new Agendamento();
-                agend.setCpfProfAgendamento(cpfProf);
-                agend.setCpfPacienteAgendamento(cpfPaci);
-                agend.setDataAgendamento(data.data_agendamento());
-                agend.setHoraInicio(data.hora_agendamento());
-                agend.setDuracao(data.duracao());
-                agend.setLinkVideo(data.link_video());
-                agend.setLembreteEnviado(data.lembrete_enviado());
-                agend.setObservacoes(data.observacoes());
-                agend.setStatus(data.status());
-                agendamentoRepository.save(agend);
-                return ResponseEntity.status(HttpStatus.CREATED).body(agend);
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
+            Agendamento agendamento = agendamentoService.saveAgendamento(data);
+            return ResponseEntity.status(HttpStatus.CREATED).body(agendamento);
+        }  catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Agendamento> updateAgendamento(@RequestBody @Valid AgendamentoDto data,
                                                          @PathVariable int id) {
         try {
-            Profissional cpfProf = profissionalRepository.findByCpfProf(data.cpf_prof());
-            Paciente cpfPaci = pacienteRepository.findByCpfPaciente(data.cpf_paciente());
-            return agendamentoRepository.findById(id)
-                    .map(result -> {
-                        result.setCpfProfAgendamento(cpfProf);
-                        result.setCpfPacienteAgendamento(cpfPaci);
-                        result.setDataAgendamento(data.data_agendamento());
-                        result.setHoraInicio(data.hora_agendamento());
-                        result.setDuracao(data.duracao());
-                        result.setLinkVideo(data.link_video());
-                        result.setLembreteEnviado(data.lembrete_enviado());
-                        result.setObservacoes(data.observacoes());
-                        result.setStatus(data.status());
-                        agendamentoRepository.save(result);
-                        return ResponseEntity.status(HttpStatus.OK).body(result);
-                    })
-                    .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-        } catch (Exception e) {
-            e.printStackTrace();
+            Agendamento agendamento = agendamentoService.updateAgendamento(id,data);
+            return ResponseEntity.status(HttpStatus.OK).body(agendamento);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e ) {
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAgendamento(@PathVariable @Valid int id) {
-        return agendamentoRepository.findById(id)
-                .map(result -> {
-                    agendamentoRepository.delete(result);
-                    return ResponseEntity.status(HttpStatus.NO_CONTENT).<Void>build();
-                })
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<String> deleteAgendamento(@PathVariable @Valid int id) {
+        try{
+            agendamentoService.deleteAgendamento(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("confirmacao")
+    public ResponseEntity<Agendamento> confirmeAgendamento(@RequestBody @Valid AgendamentoConfirmeDto data) {
+        try {
+            Agendamento agendamento = agendamentoService.confirmeAgendamento(data);
+            return ResponseEntity.status(HttpStatus.OK).body(agendamento);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (Exception e) {
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

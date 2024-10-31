@@ -1,8 +1,8 @@
 package com.project.mindly.service;
 
 import com.project.mindly.model.paciente.Paciente;
-import com.project.mindly.model.paciente.PacienteDto;
-import com.project.mindly.model.paciente.PacienteDtoPatch;
+import com.project.mindly.dtos.paciente.PacienteDto;
+import com.project.mindly.dtos.paciente.PacienteDtoPatch;
 import com.project.mindly.repository.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
 
-    @Autowired
+
     public PacienteService(PacienteRepository pacienteRepository) {
         this.pacienteRepository = pacienteRepository;
     }

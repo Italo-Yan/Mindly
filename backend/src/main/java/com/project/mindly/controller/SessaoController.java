@@ -1,14 +1,14 @@
 package com.project.mindly.controller;
 
 import com.project.mindly.model.sessao.Sessao;
-import com.project.mindly.model.sessao.SessaoDto;
-import com.project.mindly.model.sessao.SessaoDtoResponse;
-import com.project.mindly.service.PacienteService;
+import com.project.mindly.dtos.sessao.SessaoDto;
+import com.project.mindly.dtos.sessao.SessaoDtoResponse;
 import com.project.mindly.service.SessaoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,11 @@ import java.util.List;
 @RequestMapping("/sessao")
 public class SessaoController {
 
-    private final SessaoService sessaoService;
+
     private static final Logger logger = LoggerFactory.getLogger(SessaoController.class);
+    private final SessaoService sessaoService;
 
-
+    @Autowired
     public SessaoController(SessaoService sessaoService) {
         this.sessaoService = sessaoService;
     }
