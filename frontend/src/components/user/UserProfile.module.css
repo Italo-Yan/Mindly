@@ -1,0 +1,39 @@
+.profileBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 851px;
+  height: 238px;
+  border: 1px solid var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profilePicture {
+  width: 215px;
+  height: 200px;
+  background-color: var(--gray);
+  border-radius: 10px;
+}
+
+.info {
+  text-align: center;
+}
+
+.editButton {
+  padding: 10px 20px;
+  border: 1px solid var(--gray);
+  background-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.descriptionBox {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid var(--blue-100);
+  border-radius: 10px;
+  text-align: left;
+}

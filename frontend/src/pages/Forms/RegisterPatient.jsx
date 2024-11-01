@@ -1,4 +1,4 @@
-import { Patient } from "../../forms/PatientForm";
+import { Patient } from "../../components/forms/PatientForm";
 
 export function RegisterPacient() {
   return (

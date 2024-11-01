@@ -1,4 +1,4 @@
-import { Professional } from "../../forms/ProfessionalForm";
+import { Professional } from "../../components/forms/ProfessionalForm";
 
 export function RegisterProfessional() {
   return (
