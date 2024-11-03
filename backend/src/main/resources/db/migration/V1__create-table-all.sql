@@ -68,12 +68,9 @@ CREATE
     SQL SECURITY DEFINER
     VIEW `vw_profissional_publico` AS
 SELECT
-    `tb_profissional`.`cpf_prof` AS `cpf_prof`,
     `tb_profissional`.`nome_prof` AS `nome_prof`,
-    `tb_profissional`.`email_prof` AS `email_prof`,
     `tb_profissional`.`abordagem_teorica` AS `abordagem_teorica`,
     `tb_profissional`.`descricao_prof` AS `descricao_prof`,
-    `tb_profissional`.`telefone_prof` AS `telefone_prof`,
     `tb_profissional`.`crp` AS `crp`
 FROM
     `tb_profissional`;

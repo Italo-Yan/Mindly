@@ -1,7 +1,7 @@
 package com.project.mindly.controller.view;
 
 import com.project.mindly.model.view.ProfissionalPublicoView;
-import com.project.mindly.service.ProfissionalPublicoService;
+import com.project.mindly.service.view.ProfissionalPublicoService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/profissionais/publico")
@@ -35,9 +34,9 @@ public class ProfissionalPublicoController {
         return profissionalPublicoView;
     }
 
-    @GetMapping("/{cpf}")
-    public ResponseEntity<ProfissionalPublicoView> getProfissionalPublicoById(@PathVariable @Valid String cpf) {
-        return profissionalPublicoService.findrofissionalPublicoByCpf(cpf)
+    @GetMapping("/{crp}")
+    public ResponseEntity<ProfissionalPublicoView> getProfissionalPublicoByCrp(@PathVariable @Valid String crp) {
+        return profissionalPublicoService.findProfissionalPublicoByCrp(crp)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 

@@ -1,7 +1,7 @@
 package com.project.mindly.controller.view;
 
 import com.project.mindly.model.view.PerfilPacienteProfissionalView;
-import com.project.mindly.service.PerfilPacienteProfissionalService;
+import com.project.mindly.service.view.PerfilPacienteProfissionalService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class PerfilPacienteProfissionalController {
     }
 
     @GetMapping("/{cpf}")
-    public ResponseEntity<PerfilPacienteProfissionalView> getPerfilPacienteProfissional(@PathVariable @Valid String cpf) {
+    public ResponseEntity<PerfilPacienteProfissionalView> getPerfilPacienteProfissionalByCpf(@PathVariable @Valid String cpf) {
         return perfilPacienteProfissionalService.findPerfilPacienteProfissionalById(cpf)
                 .map(result-> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
