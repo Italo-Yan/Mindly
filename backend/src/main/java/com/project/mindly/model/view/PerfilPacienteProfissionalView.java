@@ -17,7 +17,7 @@ public class PerfilPacienteProfissionalView {
     @Column(name = "cpf_paciente",length = 11)
     private String cpfPaciente;
 
-    @Column(name = "name_paciente",length = 155)
+    @Column(name = "nome_paciente",length = 155)
     private String namePaciente;
 
     @Column(name = "email_paciente",length = 155)

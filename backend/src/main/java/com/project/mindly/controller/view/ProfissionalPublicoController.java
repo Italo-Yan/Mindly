@@ -30,7 +30,7 @@ public class ProfissionalPublicoController {
     @GetMapping
     public List<ProfissionalPublicoView> getProfissionalPublicoAll() {
         List<ProfissionalPublicoView> profissionalPublicoView = profissionalPublicoService.findProfissionalPublicoAll();
-        logger.info("Profissionais: {}", profissionalPublicoView);
+        logger.info("Profissionais: {}", profissionalPublicoView.size());
         return profissionalPublicoView;
     }
 

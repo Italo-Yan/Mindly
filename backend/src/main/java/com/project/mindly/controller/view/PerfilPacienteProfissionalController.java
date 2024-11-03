@@ -30,7 +30,7 @@ public class PerfilPacienteProfissionalController {
     @GetMapping
     public List<PerfilPacienteProfissionalView> getPerfilPacienteProfissionalAll() {
         List<PerfilPacienteProfissionalView> perfilPacienteProfissionalViews = perfilPacienteProfissionalService.findPerfilPacienteProfissionalAll();
-        logger.info("Pacientes", perfilPacienteProfissionalViews);
+        logger.info("Pacientes: {}", perfilPacienteProfissionalViews.size());
         return perfilPacienteProfissionalViews;
     }
 

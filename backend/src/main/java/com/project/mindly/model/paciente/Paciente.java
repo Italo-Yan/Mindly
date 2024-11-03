@@ -4,6 +4,7 @@ package com.project.mindly.model.paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.mindly.model.agendamento.Agendamento;
 import com.project.mindly.model.sessao.Sessao;
+import com.project.mindly.model.userRole.UserRoles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -49,6 +50,10 @@ public class Paciente {
 
     @Column(name = "telefone_paciente")
     private String telPaciente;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRoles roles;
 
     @OneToMany(mappedBy = "cpfPacienteAgendamento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
@@ -136,5 +141,13 @@ public class Paciente {
 
     public void setSessaoPaciente(Set<Sessao> sessaoPaciente) {
         this.sessaoPaciente = sessaoPaciente;
+    }
+
+    public UserRoles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(UserRoles roles) {
+        this.roles = roles;
     }
 }

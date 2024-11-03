@@ -1,15 +1,16 @@
 
 CREATE TABLE tb_profissional(
-cpf_prof VARCHAR (20)  NOT NULL UNIQUE,
-nome_prof VARCHAR(155) NOT NULL,
-crp VARCHAR(10) NOT NULL UNIQUE,
-email_prof VARCHAR(155) NOT NULL UNIQUE,
-senha VARCHAR(255) NOT NULL,
-descricao_prof VARCHAR(500),
-abordagem_teorica VARCHAR(255),
-endereco_prof VARCHAR(255),
-telefone_prof VARCHAR(20),
-PRIMARY KEY (cpf_prof)
+    cpf_prof VARCHAR (20)  NOT NULL UNIQUE,
+    nome_prof VARCHAR(155) NOT NULL,
+    crp VARCHAR(10) NOT NULL UNIQUE,
+    email_prof VARCHAR(155) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    descricao_prof VARCHAR(500),
+    abordagem_teorica VARCHAR(255),
+    endereco_prof VARCHAR(255),
+    telefone_prof VARCHAR(20),
+    role ENUM('PROFISSIONAL') NOT NULL DEFAULT 'PROFISSIONAL',
+    PRIMARY KEY (cpf_prof)
 );
 
 CREATE TABLE tb_paciente (
@@ -21,6 +22,7 @@ CREATE TABLE tb_paciente (
 	medicacao VARCHAR(255),
 	endereco_paciente VARCHAR(255),
 	telefone_paciente VARCHAR(20),
+    role ENUM('PACIENTE') NOT NULL DEFAULT 'PACIENTE',
 	PRIMARY KEY (cpf_paciente)
 );
 
@@ -89,43 +91,43 @@ FROM
 
 CREATE OR REPLACE VIEW `vw_agendamentos_profissional` AS
 SELECT
-    `tb_agendamento`.`id` AS `id_agendamento`,
-    `tb_agendamento`.`cpf_prof` AS `cpf_prof`,
-    `tb_paciente`.`cpf_paciente` AS `cpf_paciente`,
+    `tb_agendamento`.`cpf_paciente` AS `cpf_paciente`,
     `tb_paciente`.`nome_paciente` AS `nome_paciente`,
+    `tb_paciente`.`email_paciente` AS `email_paciente`,
+    `tb_paciente`.`telefone_paciente` AS `telefone_paciente`,
     `tb_agendamento`.`data_agendamento` AS `data_agendamento`,
     `tb_agendamento`.`hora_inicio` AS `hora_inicio`,
     `tb_agendamento`.`duracao` AS `duracao`,
+    `tb_agendamento`.`link_video` AS `link_video`,
+    `tb_agendamento`.`lembrete_enviado` AS `lembrete_enviado`,
+    `tb_agendamento`.`observacoes` AS `observacoes`,
     `tb_agendamento`.`status` AS `status`,
-    `tb_agendamento`.`link_video` AS `link_video`
+    `tb_sessao`.`quantidade_total` AS `quantidade_total`
 FROM
     `tb_agendamento`
         JOIN
     `tb_paciente` ON `tb_agendamento`.`cpf_paciente` = `tb_paciente`.`cpf_paciente`
-WHERE
-    `tb_agendamento`.`cpf_prof` = cpf_prof;
+        JOIN
+    `tb_sessao` ON `tb_agendamento`.`cpf_paciente` = `tb_sessao`.`cpf_paciente`;
 
 
-CREATE VIEW vw_agenda_profissional AS
+
+CREATE
+    ALGORITHM = UNDEFINED
+    DEFINER = `root`@`localhost`
+    SQL SECURITY DEFINER
+    VIEW `vw_profissionais_cadastrados` AS
 SELECT
-    p.cpf_prof,
-    p.nome_prof,
-    a.data_agendamento,
-    a.hora_inicio,
-    a.duracao,
-    a.status,
-    CASE
-        WHEN a.status IS NULL THEN 'DISPONÍVEL'
-        ELSE a.status
-        END AS status_agendamento
+    cpf_prof AS cpf_prof,
+    nome_prof AS nome_prof,
+    abordagem_teorica AS abordagem_teorica,
+    descricao_prof AS descricao_prof,
+    telefone_prof AS telefone_prof,
+    email_prof AS email_prof,
+    crp AS crp
 FROM
-    tb_profissional p
-        LEFT JOIN
-    tb_agendamento a ON p.cpf_prof = a.cpf_prof
-WHERE
-    a.data_agendamento >= CURDATE()  -- Exibir apenas agendamentos futuros
-ORDER BY
-    a.data_agendamento, a.hora_inicio;
+    tb_profissional;
+
 
 
 DELIMITER //

@@ -22,8 +22,8 @@ public class AgendamentosProfissionalService {
         return agendamentosProfissionalRepository.findAll();
     }
 
-    public Optional<AgendamentosProfissionalView> findAgendamentoProfissionalById(int id) {
-        return Optional.ofNullable(agendamentosProfissionalRepository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("Agendamento não encontrado com  o ID: "+ id)));
+    public Optional<AgendamentosProfissionalView> findAgendamentoProfissionalByCpf(String cpf) {
+        return Optional.ofNullable(agendamentosProfissionalRepository.findById(cpf)
+                .orElseThrow(()-> new EntityNotFoundException("Paciente não encontrado com  o CPF: "+ cpf)));
     }
 }

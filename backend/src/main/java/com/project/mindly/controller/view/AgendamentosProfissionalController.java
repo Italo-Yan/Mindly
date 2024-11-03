@@ -31,13 +31,13 @@ public class AgendamentosProfissionalController {
     @GetMapping
     public List<AgendamentosProfissionalView> getAgendamentosProfissionalViewAll() {
         List<AgendamentosProfissionalView> agendamentosProfissionalView= agendamentosProfissionalService.findAgendamentoProfissionalAll();
-        logger.info("Agendamentos: {}", agendamentosProfissionalView);
+        logger.info("Pacientes: {}", agendamentosProfissionalView.size());
         return agendamentosProfissionalView;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AgendamentosProfissionalView> getAgendamentosProfissionalById(@PathVariable @Valid int id) {
-        return agendamentosProfissionalService.findAgendamentoProfissionalById(id)
+    public ResponseEntity<AgendamentosProfissionalView> getAgendamentosProfissionalById(@PathVariable @Valid String cpf) {
+        return agendamentosProfissionalService.findAgendamentoProfissionalByCpf(cpf)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 

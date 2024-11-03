@@ -2,10 +2,7 @@ package com.project.mindly.model.view;
 
 
 import com.project.mindly.model.agendamento.AgendamentoStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,17 +12,17 @@ import java.time.LocalTime;
 public class AgendamentosProfissionalView {
 
     @Id
-    @Column(name = "id_agendamento")
-    private int idAgendamento;
-
-    @Column(name = "cpf_prof",length = 11)
-    private String cpfProf;
-
     @Column(name = "cpf_paciente",length = 11)
     private String cpfPaciente;
 
-    @Column(name = "name_paciente",length = 155)
+    @Column(name = "nome_paciente",length = 155)
     private String namePaciente;
+
+    @Column(name = "email_paciente",length = 155)
+    private String emailPaciente;
+
+    @Column(name = "telefone_paciente",length = 20)
+    private String telefonePaciente;
 
     @Column(name = "data_agendamento")
     private LocalDate dataAgendamento;
@@ -36,27 +33,21 @@ public class AgendamentosProfissionalView {
     @Column(name = "duracao")
     private int duracao;
 
-    @Column(name = "status")
-    private AgendamentoStatus status = AgendamentoStatus.PENDENTE;
-
     @Column(name = "link_video")
     private String linkVideo;
 
-    public int getIdAgendamento() {
-        return idAgendamento;
-    }
+    @Column(name = "lembrete_enviado")
+    private int lembreteEnviado;
 
-    public void setIdAgendamento(int idAgendamento) {
-        this.idAgendamento = idAgendamento;
-    }
+    @Column(name = "observacoes",length = 500)
+    private String observacoes;
 
-    public String getCpfProf() {
-        return cpfProf;
-    }
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private AgendamentoStatus status;
 
-    public void setCpfProf(String cpfProf) {
-        this.cpfProf = cpfProf;
-    }
+    @Column(name = "quantidade_total")
+    private int quantidadeTotal;
 
     public String getCpfPaciente() {
         return cpfPaciente;
@@ -72,6 +63,22 @@ public class AgendamentosProfissionalView {
 
     public void setNamePaciente(String namePaciente) {
         this.namePaciente = namePaciente;
+    }
+
+    public String getEmailPaciente() {
+        return emailPaciente;
+    }
+
+    public void setEmailPaciente(String emailPaciente) {
+        this.emailPaciente = emailPaciente;
+    }
+
+    public String getTelefonePaciente() {
+        return telefonePaciente;
+    }
+
+    public void setTelefonePaciente(String telefonePaciente) {
+        this.telefonePaciente = telefonePaciente;
     }
 
     public LocalDate getDataAgendamento() {
@@ -98,6 +105,30 @@ public class AgendamentosProfissionalView {
         this.duracao = duracao;
     }
 
+    public String getLinkVideo() {
+        return linkVideo;
+    }
+
+    public void setLinkVideo(String linkVideo) {
+        this.linkVideo = linkVideo;
+    }
+
+    public int getLembreteEnviado() {
+        return lembreteEnviado;
+    }
+
+    public void setLembreteEnviado(int lembreteEnviado) {
+        this.lembreteEnviado = lembreteEnviado;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
     public AgendamentoStatus getStatus() {
         return status;
     }
@@ -106,11 +137,11 @@ public class AgendamentosProfissionalView {
         this.status = status;
     }
 
-    public String getLinkVideo() {
-        return linkVideo;
+    public int getQuantidadeTotal() {
+        return quantidadeTotal;
     }
 
-    public void setLinkVideo(String linkVideo) {
-        this.linkVideo = linkVideo;
+    public void setQuantidadeTotal(int quantidadeTotal) {
+        this.quantidadeTotal = quantidadeTotal;
     }
 }

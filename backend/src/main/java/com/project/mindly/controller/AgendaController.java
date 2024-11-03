@@ -34,7 +34,7 @@ public class AgendaController {
     @GetMapping
     public List<Agenda> getAllAgenda() {
         List<Agenda> agenda = agendaService.findAgendaAll();
-        logger.info("Total de agendas retornadas: {}",agenda);
+        logger.info("Total de agendas retornadas: {}",agenda.size());
         return agenda;
     }
 
