@@ -1,9 +1,11 @@
 package com.project.mindly.controller;
 
 
+import com.project.mindly.dtos.userAuth.UserAuth;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.dtos.paciente.PacienteDto;
 import com.project.mindly.dtos.paciente.PacienteDtoPatch;
+import com.project.mindly.service.AuthService;
 import com.project.mindly.service.PacienteService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +28,12 @@ public class PacienteController {
 
     private static final Logger logger = LoggerFactory.getLogger(PacienteController.class);
     private final PacienteService pacienteService;
+    private final AuthService authService;
 
     @Autowired
-    public PacienteController(PacienteService pacienteService) {
+    public PacienteController(PacienteService pacienteService, AuthService authService){
         this.pacienteService = pacienteService;
+        this.authService = authService;
     }
 
     @GetMapping
@@ -79,6 +85,26 @@ public class PacienteController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginPaciente(@RequestBody @Valid UserAuth data) {
+        try {
+            if (authService.authenticatePaciente(data.email(), data.password())) {
+                return ResponseEntity.status(HttpStatus.OK).body("Paciente autenticado com sucesso");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+            }
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado");
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha inválida");
+        } catch (Exception e) {
+            logger.error("Ocorreu um erro inesperado", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor");
+        }
+
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.project.mindly.model.agenda;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.project.mindly.enums.AgendaAtivo;
 import com.project.mindly.model.profissional.Profissional;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

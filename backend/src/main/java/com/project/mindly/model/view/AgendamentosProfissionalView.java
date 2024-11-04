@@ -1,7 +1,7 @@
 package com.project.mindly.model.view;
 
 
-import com.project.mindly.model.agendamento.AgendamentoStatus;
+import com.project.mindly.enums.AgendamentoStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

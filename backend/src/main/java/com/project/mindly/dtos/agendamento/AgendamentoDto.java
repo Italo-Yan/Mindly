@@ -2,7 +2,7 @@ package com.project.mindly.dtos.agendamento;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.project.mindly.config.LocalTimeDeserializer;
-import com.project.mindly.model.agendamento.AgendamentoStatus;
+import com.project.mindly.enums.AgendamentoStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

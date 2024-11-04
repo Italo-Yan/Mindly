@@ -4,7 +4,7 @@ package com.project.mindly.model.paciente;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.mindly.model.agendamento.Agendamento;
 import com.project.mindly.model.sessao.Sessao;
-import com.project.mindly.model.userRole.UserRoles;
+import com.project.mindly.enums.UserRoles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

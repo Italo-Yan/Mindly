@@ -3,6 +3,7 @@ package com.project.mindly.model.agendamento;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.project.mindly.enums.AgendamentoStatus;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.model.sessao.Sessao;
