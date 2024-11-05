@@ -1,7 +1,11 @@
+import { Box } from "../../components/box/Box";
 import { Professional } from "../../components/forms/ProfessionalForm";
 
 export function RegisterProfessional() {
   return (
-    <Professional />
+    <>
+      <Box name="Cadastro" />
+      <Professional />
+    </>
   )
 }

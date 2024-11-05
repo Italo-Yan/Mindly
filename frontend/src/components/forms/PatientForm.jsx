@@ -2,7 +2,6 @@ import { useState } from "react";
 import * as zod from "zod";
 import styles from "./Form.module.css";
 
-
 const cadastroSchema = zod.object({
   nomeCompleto: zod
     .string()
@@ -75,7 +74,7 @@ export const Patient = () => {
 
   return (
     <div>
-      <h2 className={styles.formTitle}>Cadastro</h2>
+      {/* <h2 className={styles.formTitle}>Cadastro</h2> */}
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <div>
           <label htmlFor="nomeCompleto">Nome Completo</label>

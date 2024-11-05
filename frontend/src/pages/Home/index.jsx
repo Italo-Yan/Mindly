@@ -1,4 +1,4 @@
-import { Descripton } from "../../components/description/Description";
+import { Description } from "../../components/description/Description";
 import { Box } from "../../components/box/Box";
 import { Services } from "../../components/services/Services";
 import { About } from "../../components/about/About";
@@ -7,9 +7,9 @@ import { Contact } from "../../components/contact/Contact";
 export function Home() {
   return (
     <div>
-      <Descripton />
+      <Description />
       <section id="home">
-        <Box />
+        <Box name="SERVIÇOS" />
       </section>
       <section id="services">
         <Services />

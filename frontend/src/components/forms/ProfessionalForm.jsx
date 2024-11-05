@@ -92,104 +92,104 @@ export const Professional = () => {
 
   return (
     <div>
-    <h2 className={styles.formTitle}>Cadastro</h2>
-    <form className={styles.formContainer} onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="nomeCompleto">Nome Completo</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="nomeCompleto"
-          name="nomeCompleto"
-          value={formData.nomeCompleto}
-          onChange={handleChange}
-        />
-        {errors.nomeCompleto && <p className={styles.errorText}>{errors.nomeCompleto}</p>}
-      </div>
-      <div>
-        <label htmlFor="cpf">CPF</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="cpf"
-          name="cpf"
-          value={formData.cpf}
-          onChange={handleChange}
-        />
-        {errors.cpf && <p className={styles.errorText}>{errors.cpf}</p>}
-      </div>
-      <div>
-        <label htmlFor="crp">CRP</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="crp"
-          name="crp"
-          value={formData.crp}
-          onChange={handleChange}
-        />
-        {errors.crp && <p className={styles.errorText}>{errors.crp}</p>}
-      </div>
-      <div>
-        <label htmlFor="abordagemTeorica">Abordagem Teórica</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="abordagemTeorica"
-          name="abordagemTeorica"
-          value={formData.abordagemTeorica}
-          onChange={handleChange}
-        />
-        {errors.abordagemTeorica && <p className={styles.errorText}>{errors.abordagemTeorica}</p>}
-      </div>
-      <div>
-        <label htmlFor="email">E-mail</label>
-        <input
-          className={styles.input}
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p className={styles.errorText}>{errors.email}</p>}
-      </div>
-      <div>
-        <label htmlFor="senha">Senha</label>
-        <input
-          className={styles.input}
-          type="password"
-          id="senha"
-          name="senha"
-          value={formData.senha}
-          onChange={handleChange}
-        />
-        {errors.senha && <p className={styles.errorText}>{errors.senha}</p>}
-      </div>
-      <div>
-        <label htmlFor="telefone">Telefone</label>
-        <input
-          className={styles.input}
-          type="text"
-          id="telefone"
-          name="telefone"
-          value={formData.telefone}
-          onChange={handleChange}
-        />
-        {errors.telefone && <p className={styles.errorText}>{errors.telefone}</p>}
-      </div>
-      <div>
-        <label htmlFor="descricao">Descrição (opcional)</label>
-        <textarea
-          className={styles.textarea}
-          id="descricao"
-          name="descricao"
-          value={formData.descricao}
-          onChange={handleChange}
-        />
-      </div>
-      <button className={styles.button} type="submit">Cadastrar</button>
-    </form>
-  </div>
-);
+      {/* <h2 className={styles.formTitle}>Cadastro</h2> */}
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="nomeCompleto">Nome Completo</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="nomeCompleto"
+            name="nomeCompleto"
+            value={formData.nomeCompleto}
+            onChange={handleChange}
+          />
+          {errors.nomeCompleto && <p className={styles.errorText}>{errors.nomeCompleto}</p>}
+        </div>
+        <div>
+          <label htmlFor="cpf">CPF</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="cpf"
+            name="cpf"
+            value={formData.cpf}
+            onChange={handleChange}
+          />
+          {errors.cpf && <p className={styles.errorText}>{errors.cpf}</p>}
+        </div>
+        <div>
+          <label htmlFor="crp">CRP</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="crp"
+            name="crp"
+            value={formData.crp}
+            onChange={handleChange}
+          />
+          {errors.crp && <p className={styles.errorText}>{errors.crp}</p>}
+        </div>
+        <div>
+          <label htmlFor="abordagemTeorica">Abordagem Teórica</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="abordagemTeorica"
+            name="abordagemTeorica"
+            value={formData.abordagemTeorica}
+            onChange={handleChange}
+          />
+          {errors.abordagemTeorica && <p className={styles.errorText}>{errors.abordagemTeorica}</p>}
+        </div>
+        <div>
+          <label htmlFor="email">E-mail</label>
+          <input
+            className={styles.input}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+        </div>
+        <div>
+          <label htmlFor="senha">Senha</label>
+          <input
+            className={styles.input}
+            type="password"
+            id="senha"
+            name="senha"
+            value={formData.senha}
+            onChange={handleChange}
+          />
+          {errors.senha && <p className={styles.errorText}>{errors.senha}</p>}
+        </div>
+        <div>
+          <label htmlFor="telefone">Telefone</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="telefone"
+            name="telefone"
+            value={formData.telefone}
+            onChange={handleChange}
+          />
+          {errors.telefone && <p className={styles.errorText}>{errors.telefone}</p>}
+        </div>
+        <div>
+          <label htmlFor="descricao">Descrição (opcional)</label>
+          <textarea
+            className={styles.textarea}
+            id="descricao"
+            name="descricao"
+            value={formData.descricao}
+            onChange={handleChange}
+          />
+        </div>
+        <button className={styles.button} type="submit">Cadastrar</button>
+      </form>
+    </div>
+  );
 };

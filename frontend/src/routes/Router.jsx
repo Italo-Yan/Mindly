@@ -8,6 +8,7 @@ import { RegisterProfessional } from '../pages/Forms/RegisterProfessional';
 import { RegisterPacient } from '../pages/Forms/RegisterPatient';
 import { LoginPage } from '../pages/Login';
 import { ProfilePage } from '../pages/Profile';
+import { ListPacient } from '../pages/ListPacient';
 
 export function Router() {
   return (
@@ -20,6 +21,7 @@ export function Router() {
         <Route path='/register/patient' element={<RegisterPacient />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/perfil' element={<ProfilePage />} />
+        <Route path='/listPacients' element={<ListPacient />} />
       </Route>
     </Routes>
   )

@@ -1,7 +1,11 @@
+import { Box } from "../../components/box/Box";
 import { Patient } from "../../components/forms/PatientForm";
 
 export function RegisterPacient() {
   return (
-    <Patient />
+    <>
+      <Box name="Cadastro" />
+      <Patient />
+    </>
   )
 }

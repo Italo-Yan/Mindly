@@ -1,13 +1,11 @@
 import { Description } from "../../components/description/Description";
 import { Box } from "../../components/box/Box";
-import { Profile } from "../../components/profile/Profile";
 
-export function ProfilePage() {
+export function ListPacient() {
   return (
     <>
       <Description />
-      <Box name="Meu Perfil" />
-      <Profile />
+      <Box name="Lista de Pacientes" />
     </>
   )
 }

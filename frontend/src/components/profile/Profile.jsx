@@ -1,5 +1,8 @@
+import { NavLink } from "react-router-dom";
+
 import { EditButton } from "../editButton/EditButton";
 import { UserProfile } from "../user/UserProfile";
+
 import styles from "./Profile.module.css";
 
 export function Profile() {
@@ -14,7 +17,9 @@ export function Profile() {
       <div className={styles.cardContainer}>
         <div className={styles.card}>
           <h2>LISTA DE PACIENTES</h2>
-          <button className={styles.viewButton}>VISUALIZAR</button>
+          <NavLink to={"/listPacients"}>
+            <button className={styles.viewButton}>VISUALIZAR</button>
+          </NavLink>
           <h3>PACIENTES AGENDADOS</h3>
           <EditButton onClick={() => console.log("Editar Pacientes Agendados")} />
         </div>
