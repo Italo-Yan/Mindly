@@ -1,29 +1,32 @@
 # Mindly
 
-![]()
+![Tela inicial do Mindly](./frontend//src/assets/Tela1.svg)
+
 Este é um projeto de agenda desenvolvido com React. O aplicativo foi projetado para ser acessível, simples e acolhedor.
 
-## Funcionalidades
+## Mapa de Navegação
 
-1. Página inicial com menu na barra;
-2. Tela para escolha de perfil (profissional ou paciente);
-3. Formulários de cadastro de acordo com o perfil escolhido;
-4. Login com validação de perfil;
+- **Navegação Inicial**:
 
-- Perfil paciente. Telas:
+1.	Página inicial com menu na barra; 
+2.	Tela para escolha de perfil (profissional ou paciente); 
+3.	Formulários de cadastro de acordo com o perfil escolhido; 
+4.	Login com validação de perfil; 
 
-5. Ver perfil dos profissionais (bio);
-6. Ver grade de horário disponível do profissional escolhido e agendar e
-desmarcar;
+- **Perfil paciente. Telas**:
 
-- Perfil profissional. Telas:
+5.	Ver perfil dos profissionais (bio); 
+6.	Ver grade de horário disponível do profissional escolhido e agendar e desmarcar;  AGENDAR, FALTA DESMARCAR
 
-7. Perfil profissional com informações para o paciente visualizar;
-8. Lista de pacientes;
-9. Informação do paciente (medicação, data das sessões e quantidade de sessões);
-10. Adicionar e remover grades de horários. Confirmação de agendamento;
-11. Ver pacientes agendados e remarcação;
-12. Adicionar link de chamada de vídeo ao agendamento
+- **Perfil profissional. Telas**: 
+
+7.	Perfil profissional com informações para o paciente visualizar; INICIADO
+8.	Lista pacientes;
+9.	Informação do paciente (medicação, data das sessões e qntd de sessões);
+10.	Adicionar e remover grades de horários. Confirmação de agendamento;
+11.	Ver pacientes agendados. Remarcação;
+12.	Adicionar link de chamada de vídeo ao agendamento;
+13.   Buscar Profissional. 
 
 ## Tecnologias Utilizadas
 
