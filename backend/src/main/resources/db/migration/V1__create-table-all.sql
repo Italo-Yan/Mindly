@@ -143,3 +143,49 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE create_roles_if_not_exists()
+BEGIN
+    DECLARE profissional_exists INT DEFAULT 0;
+    DECLARE admin_exists INT DEFAULT 0;
+    DECLARE paciente_exists INT DEFAULT 0;
+
+    SELECT COUNT(*) INTO profissional_exists FROM mysql.user WHERE user = 'Profissional' AND host = '%';
+    IF profissional_exists = 0 THEN
+        CREATE ROLE 'Profissional';
+    END IF;
+
+    SELECT COUNT(*) INTO admin_exists FROM mysql.user WHERE user = 'Admin' AND host = '%';
+    IF admin_exists = 0 THEN
+        CREATE ROLE 'Admin';
+    END IF;
+
+    SELECT COUNT(*) INTO paciente_exists FROM mysql.user WHERE user = 'Paciente' AND host = '%';
+    IF paciente_exists = 0 THEN
+        CREATE ROLE 'Paciente';
+    END IF;
+END //
+
+DELIMITER ;
+
+CALL create_roles_if_not_exists();
+
+
+GRANT SELECT ON tb_profissional TO Profissional;
+GRANT SELECT ON tb_paciente TO Profissional;
+GRANT SELECT, INSERT, UPDATE, DELETE ON tb_agenda TO Profissional;
+GRANT SELECT, INSERT, UPDATE, DELETE ON tb_agendamento TO Profissional;
+GRANT SELECT ON tb_sessao TO Profissional;
+
+GRANT ALL PRIVILEGES ON tb_profissional TO Admin;
+GRANT ALL PRIVILEGES ON tb_paciente TO Admin;
+GRANT ALL PRIVILEGES ON tb_agenda TO Admin;
+GRANT ALL PRIVILEGES ON tb_agendamento TO Admin;
+GRANT ALL PRIVILEGES ON tb_sessao TO Admin;
+
+GRANT SELECT ON vw_profissional_publico TO Paciente;
+GRANT SELECT ON tb_agenda TO Paciente;
+GRANT INSERT ON tb_agendamento TO Paciente;
+GRANT SELECT ON tb_sessao TO Paciente;
