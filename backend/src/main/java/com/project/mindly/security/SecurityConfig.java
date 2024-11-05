@@ -20,10 +20,10 @@ import java.security.SecureRandom;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final SecurityFilter securityFilter;
+    private final SecurityFilterPaciente securityFilterPaciente;
 
-    public SecurityConfig(SecurityFilter securityFilter) {
-        this.securityFilter = securityFilter;
+    public SecurityConfig(SecurityFilterPaciente securityFilterPaciente) {
+        this.securityFilterPaciente = securityFilterPaciente;
     }
 
 
@@ -63,7 +63,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/sessao/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/agendamento/**").hasRole("PACIENTE")
                         .anyRequest().authenticated())
-                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                 .addFilterBefore(securityFilterPaciente, UsernamePasswordAuthenticationFilter.class)
+                 //.addFilterBefore(securityFilterProfissional,UsernamePasswordAuthenticationFilter.class)
                  .build();
     }
 
