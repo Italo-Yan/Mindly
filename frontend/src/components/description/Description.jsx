@@ -1,6 +1,6 @@
 import styles from "./Description.module.css";
 
-export function Descripton() {
+export function Description() {
   return (
 
     <main className={styles.text}>

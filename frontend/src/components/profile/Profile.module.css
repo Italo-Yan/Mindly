@@ -1,3 +1,85 @@
-.text {
-  font-size: 30px;
+.userProfile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.profilePage {
+  margin-top: 70px;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 400px;
+  padding: 30px;
+
+  border: 1px solid var(--blue-500);
+  border-radius: 10px;
+  background-color: var(--white);
+
+  gap: 20px;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  color: var(--blue-500);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  color: var(--blue-500);
+  margin-bottom: 20px;
+}
+
+.viewButton {
+  border: 1px solid var(--blue-500);
+  border-radius: 40px;
+  padding: 20px 50px;
+
+  background-color: transparent;
+  color: var(--blue-500);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 60px;
+}
+
+.viewButton:hover {
+  background-color: var(--blue-500);
+  color: var(--white);
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 280px;
+  height: 220px;
+
+  background-color: var(--blue-200);
+  border-radius: 10px;
+}
+
+.calendar h3 {
+  font-size: 1.2rem;
+  color: var(--blue-500);
+  margin-bottom: 10px;
 }

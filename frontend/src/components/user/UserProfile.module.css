@@ -1,39 +1,80 @@
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
 .profileBox {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 851px;
-  height: 238px;
-  border: 1px solid var(--white);
-  padding: 20px;
-  border-radius: 10px;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+
+  width: 950px;
+  padding: 30px;
+
+  border: 1px solid var(--blue-500);
+  border-radius: 10px;
+  background-color: var(--white);
+}
+
+.profileContent {
+  display: flex;
+  align-items: flex-start;
+
+  margin-top: 40px;
+  margin-bottom: 30px;
+
+  gap: 40px;
+  width: 100%;
 }
 
 .profilePicture {
-  width: 215px;
-  height: 200px;
-  background-color: var(--gray);
-  border-radius: 10px;
+  width: 120px;
+  height: 120px;
+
+  background-color: var(--blue-500);
+
+  border-radius: 8px;
+  border: 1px solid var(--blue-500);
 }
 
 .info {
-  text-align: center;
+  flex-shrink: 0;
 }
 
-.editButton {
-  padding: 10px 20px;
-  border: 1px solid var(--gray);
-  background-color: transparent;
-  border-radius: 5px;
-  cursor: pointer;
+.info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--blue-500);
+}
+
+.info p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: var(--blue-500);
 }
 
 .descriptionBox {
+  flex: 1;
+  padding-left: 80px;
+}
+
+.descriptionBox h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--blue-500);
+  margin: 0 0 10px;
+}
+
+.descriptionBox p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--gray);
+}
+
+.editButtonContainer {
+  margin-top: 40px;
   width: 100%;
-  padding: 20px;
-  border: 1px solid var(--blue-100);
-  border-radius: 10px;
-  text-align: left;
+  display: flex;
+  justify-content: center;
 }
