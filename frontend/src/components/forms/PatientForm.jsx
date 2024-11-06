@@ -28,22 +28,6 @@ const cadastroSchema = zod.object({
     .min(8, { message: "A senha deve ter pelo menos 8 caracteres." }),
 });
 
-InputField.propTypes = {
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  error: PropTypes.string,
-}
-
-InputField.defaultProps = {
-  type: "text",
-  placeholder: "",
-  error: "null",
-}
-
 const InputField = ({ label, type, name, value, placeholder, onChange, error }) => (
   <div>
     <label htmlFor={name}>{label}</label>
@@ -59,6 +43,22 @@ const InputField = ({ label, type, name, value, placeholder, onChange, error }) 
     {error && <p className={styles.errorText}>{error}</p>}
   </div>
 );
+
+InputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};
+
+InputField.defaultProps = {
+  type: "text",
+  placeholder: "",
+  error: null,
+};
 
 export const Patient = () => {
   const [formData, setFormData] = useState({

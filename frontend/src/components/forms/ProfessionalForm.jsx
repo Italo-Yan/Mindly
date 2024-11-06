@@ -38,22 +38,6 @@ const cadastroSchema = zod.object({
     .optional(),
 });
 
-InputField.propTypes = {
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  error: PropTypes.string,
-};
-
-InputField.defaultProps = {
-  type: "text",
-  placeholder: "",
-  error: null,
-};
-
 const InputField = ({ label, type, name, value, placeholder, onChange, error }) => (
   <div>
     <label htmlFor={name}>{label}</label>
@@ -70,16 +54,32 @@ const InputField = ({ label, type, name, value, placeholder, onChange, error }) 
   </div>
 );
 
+InputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};
+
+InputField.defaultProps = {
+  type: "text",
+  placeholder: "",
+  error: null,
+};
+
 export const Professional = () => {
   const [formData, setFormData] = useState({
     nomeCompleto: '',
     cpf: '',
     crp: '',
     abordagemTeorica: '',
-    endereco: '',
-    telefone: '',
     email: '',
     senha: '',
+    telefone: '',
+    endereco: '',
     descricao: '',
   });
 
@@ -99,10 +99,10 @@ export const Professional = () => {
       cpf: '',
       crp: '',
       abordagemTeorica: '',
-      endereco: '',
-      telefone: '',
       email: '',
       senha: '',
+      telefone: '',
+      endereco: '',
       descricao: '',
     });
     setErrors({});
@@ -161,22 +161,6 @@ export const Professional = () => {
           error={errors.abordagemTeorica}
         />
         <InputField
-          label="Endereço"
-          name="endereco"
-          value={formData.endereco}
-          placeholder="Digite seu endereço"
-          onChange={handleChange}
-          error={errors.endereco}
-        />
-        <InputField
-          label="Telefone"
-          name="telefone"
-          value={formData.telefone}
-          placeholder="Digite seu telefone"
-          onChange={handleChange}
-          error={errors.telefone}
-        />
-        <InputField
           label="E-mail"
           type="email"
           name="email"
@@ -193,6 +177,22 @@ export const Professional = () => {
           placeholder="Digite sua senha"
           onChange={handleChange}
           error={errors.senha}
+        />
+        <InputField
+          label="Telefone"
+          name="telefone"
+          value={formData.telefone}
+          placeholder="Digite seu telefone"
+          onChange={handleChange}
+          error={errors.telefone}
+        />
+        <InputField
+          label="Endereço"
+          name="endereco"
+          value={formData.endereco}
+          placeholder="Digite seu endereço"
+          onChange={handleChange}
+          error={errors.endereco}
         />
         <div>
           <label htmlFor="descricao">Descrição (opcional)</label>
