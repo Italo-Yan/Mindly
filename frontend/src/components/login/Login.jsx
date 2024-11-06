@@ -1,25 +1,28 @@
 import { useState } from "react";
 import * as zod from "zod";
+import {loginPaciente, loginProfisisonal } from "../../ServicesBackend/auth/authConfig"
 
 import styles from "./Login.module.css";
 
 const loginSchema = zod.object({
-  username: zod.string().min(1, { message: "O campo Login é obrigatório." }),
-  password: zod.string().min(6, { message: "A senha deve ter pelo menos 6 caracteres." }),
+  email: zod.string().min(1, { message: "O campo Login é obrigatório." }),
+  password: zod
+    .string()
+    .min(4, { message: "A senha deve ter pelo menos 6 caracteres." }),
 });
 
 export function Login() {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const [errors, setErrors] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value, })
-  }
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
   const resetForm = () => {
-    setFormData({ username: "", password: "" });
-    setErrors({ username: "", password: "" });
-  }
+    setFormData({ email: "", password: "" });
+    setErrors({ email: "", password: "" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,17 +30,11 @@ export function Login() {
 
     if (validation.success) {
       try {
-        const response = await fetch("", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Cadastro bem-sucedido:", data);
+        const response = await loginPaciente(formData);
+        console.log(response);
+        const token = response.data
+        if (response.status == 200) {
+          console.log("Cadastro bem-sucedido: ", token);
           resetForm();
         } else {
           console.error("Erro ao cadastrar:", response.statusText);
@@ -53,7 +50,7 @@ export function Login() {
       setErrors(fieldErrors);
       console.log("Erro de validação:", fieldErrors);
     }
-  }
+  };
 
   return (
     <div className={styles.loginContainer}>
@@ -61,18 +58,22 @@ export function Login() {
         <h2 className={styles.title}>LOGIN</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
-            <label htmlFor="username" className={styles.label}>Login</label>
+            <label htmlFor="email" className={styles.label}>
+              Login
+            </label>
             <input
               type="text"
-              id="username"
+              id="email"
               className={styles.input}
-              value={formData.username}
+              value={formData.email}
               onChange={handleChange}
             />
-            {errors.username && <p className={styles.error}>{errors.username}</p>}
+            {errors.email && <p className={styles.error}>{errors.email}</p>}
           </div>
           <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>Senha</label>
+            <label htmlFor="password" className={styles.label}>
+              Senha
+            </label>
             <input
               type="password"
               id="password"
@@ -80,11 +81,15 @@ export function Login() {
               value={formData.password}
               onChange={handleChange}
             />
-            {errors.password && <p className={styles.error}>{errors.password}</p>}
+            {errors.password && (
+              <p className={styles.error}>{errors.password}</p>
+            )}
           </div>
-          <button type="submit" className={styles.button}>LOGIN</button>
+          <button type="submit" className={styles.button}>
+            LOGIN
+          </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

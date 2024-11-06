@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@phosphor-icons/react": "^2.1.7",
+    "axios": "^1.7.7",
     "frontend": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
