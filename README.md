@@ -32,7 +32,7 @@ Este é um projeto de agenda desenvolvido com React. O aplicativo foi projetado 
 
 - **Vite**: Framework de construção de projetos de frontend que se destina a oferecer uma experiência de desenvolvimento mais rápida e leve para projetos de web modernos.
 - **Java Spring-Boot**: Framework de software livre, para criar aplicativos independentes de nível de produção que são executados na Java Virtual Machine (JVM).
--- **MySQL**: Sistema de gerenciamento de banco de dados (SGBD) de código aberto, que permite a criação, modificação e consulta de dados.
+- **MySQL**: Sistema de gerenciamento de banco de dados (SGBD) de código aberto, que permite a criação, modificação e consulta de dados.
 
 ### Versões
 

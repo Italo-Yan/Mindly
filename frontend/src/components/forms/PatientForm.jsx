@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import * as zod from "zod";
 import styles from "./Form.module.css";
 
@@ -9,29 +10,64 @@ const cadastroSchema = zod.object({
     .max(100, { message: "Deve conter no máximo 100 caracteres." }),
   cpf: zod
     .string()
-    .min(11, { message: "O CPF deve conter 11 dígitos." })
-    .max(11, { message: "O CPF deve conter 11 dígitos." })
+    .length(11, { message: "O CPF deve conter 11 dígitos." })
     .regex(/^\d+$/, { message: "O CPF deve conter apenas números." }),
+  endereco: zod
+    .string()
+    .min(1, { message: "Endereço é obrigatório." }),
+  telefone: zod
+    .string()
+    .min(10, { message: "O telefone deve conter no mínimo 10 dígitos." })
+    .max(11, { message: "O telefone deve conter no máximo 11 dígitos." })
+    .regex(/^\d+$/, { message: "O telefone deve conter apenas números." }),
   email: zod
     .string()
     .email({ message: "Formato de e-mail inválido." }),
   senha: zod
     .string()
     .min(8, { message: "A senha deve ter pelo menos 8 caracteres." }),
-  telefone: zod
-    .string()
-    .min(10, { message: "O telefone deve conter no mínimo 10 dígitos." })
-    .max(11, { message: "O telefone deve conter no máximo 11 dígitos." })
-    .regex(/^\d+$/, { message: "O telefone deve conter apenas números." }),
 });
+
+InputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+}
+
+InputField.defaultProps = {
+  type: "text",
+  placeholder: "",
+  error: "null",
+}
+
+const InputField = ({ label, type, name, value, placeholder, onChange, error }) => (
+  <div>
+    <label htmlFor={name}>{label}</label>
+    <input
+      className={styles.input}
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+    />
+    {error && <p className={styles.errorText}>{error}</p>}
+  </div>
+);
 
 export const Patient = () => {
   const [formData, setFormData] = useState({
     nomeCompleto: '',
     cpf: '',
+    endereco: '',
+    telefone: '',
     email: '',
     senha: '',
-    telefone: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -48,9 +84,10 @@ export const Patient = () => {
     setFormData({
       nomeCompleto: '',
       cpf: '',
+      endereco: '',
+      telefone: '',
       email: '',
       senha: '',
-      telefone: '',
     });
     setErrors({});
   };
@@ -63,10 +100,10 @@ export const Patient = () => {
       console.log("Cadastro bem sucedido", formData);
       resetForm();
     } else {
-      const fieldErrors = {};
-      validation.error.errors.forEach((error) => {
-        fieldErrors[error.path[0]] = error.message;
-      });
+      const fieldErrors = validation.error.errors.reduce((acc, error) => {
+        acc[error.path[0]] = error.message;
+        return acc;
+      }, {});
       setErrors(fieldErrors);
       console.log("Erro de validação:", fieldErrors);
     }
@@ -74,71 +111,63 @@ export const Patient = () => {
 
   return (
     <div>
-      {/* <h2 className={styles.formTitle}>Cadastro</h2> */}
       <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="nomeCompleto">Nome Completo</label>
-          <input
-            className={styles.input}
-            type="text"
-            id="nomeCompleto"
-            name="nomeCompleto"
-            value={formData.nomeCompleto}
-            onChange={handleChange}
-          />
-          {errors.nomeCompleto && <p className={styles.errorText}>{errors.nomeCompleto}</p>}
-        </div>
-        <div>
-          <label htmlFor="cpf">CPF</label>
-          <input
-            className={styles.input}
-            type="text"
-            id="cpf"
-            name="cpf"
-            value={formData.cpf}
-            onChange={handleChange}
-          />
-          {errors.cpf && <p className={styles.errorText}>{errors.cpf}</p>}
-        </div>
-        <div>
-          <label htmlFor="email">E-mail</label>
-          <input
-            className={styles.input}
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className={styles.errorText}>{errors.email}</p>}
-        </div>
-        <div>
-          <label htmlFor="senha">Senha</label>
-          <input
-            className={styles.input}
-            type="password"
-            id="senha"
-            name="senha"
-            value={formData.senha}
-            onChange={handleChange}
-          />
-          {errors.senha && <p className={styles.errorText}>{errors.senha}</p>}
-        </div>
-        <div>
-          <label htmlFor="telefone">Telefone</label>
-          <input
-            className={styles.input}
-            type="text"
-            id="telefone"
-            name="telefone"
-            value={formData.telefone}
-            onChange={handleChange}
-          />
-          {errors.telefone && <p className={styles.errorText}>{errors.telefone}</p>}
-        </div>
+        <InputField
+          label="Nome Completo"
+          type="text"
+          name="nomeCompleto"
+          value={formData.nomeCompleto}
+          placeholder="Digite seu nome completo"
+          onChange={handleChange}
+          error={errors.nomeCompleto}
+        />
+        <InputField
+          label="CPF"
+          type="text"
+          name="cpf"
+          value={formData.cpf}
+          placeholder="Digite seu CPF"
+          onChange={handleChange}
+          error={errors.cpf}
+        />
+        <InputField
+          label="Endereço"
+          type="text"
+          name="endereco"
+          value={formData.endereco}
+          placeholder="Digite seu endereço"
+          onChange={handleChange}
+          error={errors.endereco}
+        />
+        <InputField
+          label="Telefone"
+          type="text"
+          name="telefone"
+          value={formData.telefone}
+          placeholder="Digite seu telefone"
+          onChange={handleChange}
+          error={errors.telefone}
+        />
+        <InputField
+          label="E-mail"
+          type="email"
+          name="email"
+          value={formData.email}
+          placeholder="Digite seu email"
+          onChange={handleChange}
+          error={errors.email}
+        />
+        <InputField
+          label="Senha"
+          type="password"
+          name="senha"
+          value={formData.senha}
+          placeholder="Digite sua senha"
+          onChange={handleChange}
+          error={errors.senha}
+        />
         <button className={styles.button} type="submit">Cadastrar</button>
       </form>
     </div>
   );
 };
-

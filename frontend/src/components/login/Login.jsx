@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as zod from "zod";
-import {loginPaciente, loginProfisisonal } from "../../ServicesBackend/auth/authConfig"
+import { loginPaciente, /*loginProfisisonal*/ } from "../../Services/auth/authConfig"
 
 import styles from "./Login.module.css";
 

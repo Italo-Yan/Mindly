@@ -1,6 +1,6 @@
 import { Description } from "../../components/description/Description";
 import { Box } from "../../components/box/Box";
-import { Services } from "../../components/services/Services";
+import { Services } from "../../components/servicesMindly/Services";
 import { About } from "../../components/about/About";
 import { Contact } from "../../components/contact/Contact";
 
