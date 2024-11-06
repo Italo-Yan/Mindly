@@ -6,6 +6,7 @@ import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.PacienteRepository;
 import com.project.mindly.repository.ProfissionalRepository;
 import com.project.mindly.security.TokenService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,10 @@ public class AuthService {
 
 
     public String authenticateUser(String email, String senha ) {
-
         try {
             Profissional profissional = profissionalRepository.findByEmailProf(email);
             if(profissional != null) {
                 if(profissional.getRoles().equals(UserRoles.PROFISSIONAL)) {
-
                     if (passwordEncoder.matches(senha, profissional.getPassword())) {
                         return this.tokenService.generateTokenProfissional(profissional);
                     }
@@ -47,7 +46,7 @@ public class AuthService {
                     }
                 }
             }
-            return null;
+            return new String("Usuario não encontrado com o email: "+ email);
         } catch ( Exception e ) {
             return null;
         }
