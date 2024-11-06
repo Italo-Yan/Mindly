@@ -21,9 +21,14 @@ import java.security.SecureRandom;
 public class SecurityConfig {
 
     private final SecurityFilterPaciente securityFilterPaciente;
+    private final SecurityFilterProfissional securityFilterProfissional;
+    private final SecurityFilterUnificado securityFilterUnificado;
 
-    public SecurityConfig(SecurityFilterPaciente securityFilterPaciente) {
+    public SecurityConfig(SecurityFilterPaciente securityFilterPaciente, SecurityFilterProfissional securityFilterProfissional,
+                          SecurityFilterUnificado securityFilterUnificado) {
         this.securityFilterPaciente = securityFilterPaciente;
+        this.securityFilterProfissional = securityFilterProfissional;
+        this.securityFilterUnificado = securityFilterUnificado;
     }
 
 
@@ -38,33 +43,33 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Desbloquear swagger
                         // Profissional //
+                        .requestMatchers(HttpMethod.POST,"/profissional/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/profissional/create").permitAll()
                         .requestMatchers(HttpMethod.GET,"/profissional/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.POST,"/profissional/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/profissional/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/profissional/**").hasRole("PROFISSIONAL")
-                        .requestMatchers(HttpMethod.GET,"/agenda/**").hasRole("PROFISSIONAL")
+
+                        .requestMatchers(HttpMethod.GET,"/agenda/**").hasAnyRole("PROFISSIONAL","PACIENTE")
                         .requestMatchers(HttpMethod.POST,"/agenda/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/agenda/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/agenda/**").hasRole("PROFISSIONAL")
-                        .requestMatchers(HttpMethod.GET,"/agendamento/**").hasRole("PROFISSIONAL")
+
+                        .requestMatchers(HttpMethod.GET,"/agendamento/**").hasAnyRole("PROFISSIONAL","PACIENTE")
                         .requestMatchers(HttpMethod.POST,"/agendamento/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/agendamento/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/agendamento/**").hasRole("PROFISSIONAL")
-                        .requestMatchers(HttpMethod.GET,"/sessao/**").hasRole("PROFISSIONAL")
+                        .requestMatchers(HttpMethod.GET,"/sessao/**").hasAnyRole("PROFISSIONAL","PACIENTE")
                         // Paciente //
                         .requestMatchers(HttpMethod.POST,"/paciente/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/paciente/create").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/paciente/**").hasRole("PACIENTE")
+                        .requestMatchers(HttpMethod.GET,"/paciente/**").hasAnyRole("PACIENTE","PROFISSIONAL")
                         .requestMatchers(HttpMethod.POST,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.PATCH,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.DELETE,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/profissionais/publico").hasRole("PACIENTE")
-                        .requestMatchers(HttpMethod.GET,"/agenda/**").hasRole("PACIENTE")
-                        .requestMatchers(HttpMethod.GET,"/sessao/**").hasRole("PACIENTE")
-                        .requestMatchers(HttpMethod.GET,"/agendamento/**").hasRole("PACIENTE")
                         .anyRequest().authenticated())
-                 .addFilterBefore(securityFilterPaciente, UsernamePasswordAuthenticationFilter.class)
-                 //.addFilterBefore(securityFilterProfissional,UsernamePasswordAuthenticationFilter.class)
+                 .addFilterBefore(securityFilterUnificado,UsernamePasswordAuthenticationFilter.class)
                  .build();
     }
 

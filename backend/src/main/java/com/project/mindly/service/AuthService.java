@@ -16,7 +16,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-    public AuthService(PacienteRepository pacienteRepository, ProfissionalRepository profissionalRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    public AuthService(PacienteRepository pacienteRepository, ProfissionalRepository profissionalRepository,
+                       PasswordEncoder passwordEncoder, TokenService tokenService) {
         this.pacienteRepository = pacienteRepository;
         this.profissionalRepository = profissionalRepository;
         this.passwordEncoder = passwordEncoder;
@@ -25,18 +26,20 @@ public class AuthService {
 
 
     public String authenticatePaciente(String email, String senha) {
-
         Paciente paciente = pacienteRepository.findByEmailPaciente(email);
         if(passwordEncoder.matches(senha, paciente.getPassword())) {
-            String token = this.tokenService.generateToken(paciente);
-            return token;
+            return this.tokenService.generateTokenPaciente(paciente);
         }
         return null;
     }
 
-    public boolean authenticateProfissional(String email, String senha) {
+    public String authenticateProfissional(String email, String senha) {
         Profissional profissional = profissionalRepository.findByEmailProf(email);
-        return profissional != null && passwordEncoder.matches(senha, profissional.getSenha());
+        if(passwordEncoder.matches(senha, profissional.getPassword())) {
+            return this.tokenService.generateTokenProfissional(profissional);
+        }
+        return null;
+
     }
 
 

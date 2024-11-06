@@ -39,7 +39,7 @@ public class ProfissionalController {
     @GetMapping
     public List<Profissional> getProfissionalAll() {
         List<Profissional> profissional = profissionalService.findAllProfissional();
-        logger.info("Total Profissionals : " + profissional.size());
+        logger.info("Total Profissionals: {}", profissional.size());
         return profissional;
     }
 
@@ -93,11 +93,8 @@ public class ProfissionalController {
     public ResponseEntity<String> loginProfissional(@RequestBody @Valid UserAuth data) {
 
         try {
-            if (authService.authenticateProfissional(data.email(), data.password())) {
-                return ResponseEntity.status(HttpStatus.OK).body("Profissional autenticado com sucesso");
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
-            }
+            var token = this.authService.authenticateProfissional(data.email(), data.password());
+            return ResponseEntity.status(HttpStatus.OK).body(token);
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profissional não encontrado");
         } catch (BadCredentialsException e) {
