@@ -49,18 +49,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/profissional/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/profissional/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/profissional/**").hasRole("PROFISSIONAL")
-
                         .requestMatchers(HttpMethod.GET,"/agenda/**").hasAnyRole("PROFISSIONAL","PACIENTE")
                         .requestMatchers(HttpMethod.POST,"/agenda/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/agenda/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/agenda/**").hasRole("PROFISSIONAL")
-
                         .requestMatchers(HttpMethod.GET,"/agendamento/**").hasAnyRole("PROFISSIONAL","PACIENTE")
                         .requestMatchers(HttpMethod.POST,"/agendamento/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.PATCH,"/agendamento/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.DELETE,"/agendamento/**").hasRole("PROFISSIONAL")
                         .requestMatchers(HttpMethod.GET,"/sessao/**").hasAnyRole("PROFISSIONAL","PACIENTE")
-                        // Paciente //
                         .requestMatchers(HttpMethod.POST,"/paciente/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/paciente/create").permitAll()
                         .requestMatchers(HttpMethod.GET,"/paciente/**").hasAnyRole("PACIENTE","PROFISSIONAL")
