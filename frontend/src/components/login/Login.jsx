@@ -21,13 +21,30 @@ export function Login() {
     setErrors({ username: "", password: "" });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validation = loginSchema.safeParse(formData);
 
     if (validation.success) {
-      console.log("Login bem sucedido", formData);
-      resetForm();
+      try {
+        const response = await fetch("", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Cadastro bem-sucedido:", data);
+          resetForm();
+        } else {
+          console.error("Erro ao cadastrar:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erro de rede:", error);
+      }
     } else {
       const fieldErrors = {};
       validation.error.errors.forEach((error) => {
@@ -36,7 +53,7 @@ export function Login() {
       setErrors(fieldErrors);
       console.log("Erro de validação:", fieldErrors);
     }
-  };
+  }
 
   return (
     <div className={styles.loginContainer}>
