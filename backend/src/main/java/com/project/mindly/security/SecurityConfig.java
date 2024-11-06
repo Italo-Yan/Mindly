@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,21 +21,16 @@ import java.security.SecureRandom;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final SecurityFilterPaciente securityFilterPaciente;
-    private final SecurityFilterProfissional securityFilterProfissional;
-    private final SecurityFilterUnificado securityFilterUnificado;
+    private final SecurityFilter securityFilter;
 
-    public SecurityConfig(SecurityFilterPaciente securityFilterPaciente, SecurityFilterProfissional securityFilterProfissional,
-                          SecurityFilterUnificado securityFilterUnificado) {
-        this.securityFilterPaciente = securityFilterPaciente;
-        this.securityFilterProfissional = securityFilterProfissional;
-        this.securityFilterUnificado = securityFilterUnificado;
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
     }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
          return http
+                 .cors(Customizer.withDefaults())
                 .csrf(csrf-> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -42,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs/swagger-config").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Desbloquear swagger
+                        .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                         // Profissional //
                         .requestMatchers(HttpMethod.POST,"/profissional/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/profissional/create").permitAll()
@@ -66,7 +63,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/profissionais/publico").hasRole("PACIENTE")
                         .anyRequest().authenticated())
-                 .addFilterBefore(securityFilterUnificado,UsernamePasswordAuthenticationFilter.class)
+                 .addFilterBefore(securityFilter,UsernamePasswordAuthenticationFilter.class)
                  .build();
     }
 

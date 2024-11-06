@@ -1,5 +1,6 @@
 package com.project.mindly.service;
 
+import com.project.mindly.enums.UserRoles;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.PacienteRepository;
@@ -25,22 +26,31 @@ public class AuthService {
     }
 
 
-    public String authenticatePaciente(String email, String senha) {
-        Paciente paciente = pacienteRepository.findByEmailPaciente(email);
-        if(passwordEncoder.matches(senha, paciente.getPassword())) {
-            return this.tokenService.generateTokenPaciente(paciente);
+    public String authenticateUser(String email, String senha ) {
+
+        try {
+            Profissional profissional = profissionalRepository.findByEmailProf(email);
+            if(profissional != null) {
+                if(profissional.getRoles().equals(UserRoles.PROFISSIONAL)) {
+
+                    if (passwordEncoder.matches(senha, profissional.getPassword())) {
+                        return this.tokenService.generateTokenProfissional(profissional);
+                    }
+                }
+            } else {
+                Paciente paciente = pacienteRepository.findByEmailPaciente(email);
+                if(paciente != null) {
+                    if(paciente.getRoles().equals(UserRoles.PACIENTE)) {
+                        if(passwordEncoder.matches(senha, paciente.getPassword())) {
+                            return this.tokenService.generateTokenPaciente(paciente);
+                        }
+                    }
+                }
+            }
+            return null;
+        } catch ( Exception e ) {
+            return null;
         }
-        return null;
     }
-
-    public String authenticateProfissional(String email, String senha) {
-        Profissional profissional = profissionalRepository.findByEmailProf(email);
-        if(passwordEncoder.matches(senha, profissional.getPassword())) {
-            return this.tokenService.generateTokenProfissional(profissional);
-        }
-        return null;
-
-    }
-
-
 }
+

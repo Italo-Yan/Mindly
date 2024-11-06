@@ -89,19 +89,4 @@ public class ProfissionalController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginProfissional(@RequestBody @Valid UserAuth data) {
-
-        try {
-            var token = this.authService.authenticateProfissional(data.email(), data.password());
-            return ResponseEntity.status(HttpStatus.OK).body(token);
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Profissional não encontrado");
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha inválida");
-        } catch (Exception e) {
-            logger.error("Ocorreu um erro inesperado", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor");
-        }
-    }
 }
