@@ -1,0 +1,20 @@
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  width: 100px;
+  height: 100px;
+
+  background-color: transparent;
+
+  border: 1px solid var(--blue-500);
+  border-radius: 8px;
+}
+
+.avatarImage {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+}

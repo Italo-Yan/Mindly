@@ -1,6 +1,7 @@
 import { EditButton } from "../editButton/EditButton";
 import PropTypes from 'prop-types';
 import styles from './UserProfile.module.css';
+import { Avatar } from "../avatar/Avatar";
 
 UserProfile.propTypes = {
   name: PropTypes.string.isRequired,
@@ -18,7 +19,7 @@ export function UserProfile({ name, id, crp, description }) {
     <div className={styles.profileContainer}>
       <div className={styles.profileBox}>
         <div className={styles.profileContent}>
-          <div className={styles.profilePicture}></div>
+          <Avatar />
           <div className={styles.info}>
             <h2>{name}</h2>
             <p>{id}</p>

@@ -1,0 +1,62 @@
+.container {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 60px auto;
+  padding: 20px;
+
+  border: 1px solid var(--blue-500);
+  border-radius: 8px;
+}
+
+.pacientCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px;
+
+  border-radius: 8px;
+  margin-bottom: 10px;
+
+  background-color: var(--beige);
+  transition: background-color 0.3s ease;
+}
+
+.highlighted {
+  background-color: var(--white);
+}
+
+.info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--blue-500);
+}
+
+.info p {
+  margin-top: 5px;
+  color: var(--blue-500);
+}
+
+.contactButton {
+  padding: 10px 20px;
+  border: 1px solid var(--blue-500);
+  border-radius: 20px;
+
+  background-color: var(--white);
+  transition: background-color 0.3s ease;
+  color: var(--blue-500);
+
+  cursor: pointer;
+}
+
+.contactButton:hover {
+  background-color: var(--blue-500);
+  color: var(--white);
+}
