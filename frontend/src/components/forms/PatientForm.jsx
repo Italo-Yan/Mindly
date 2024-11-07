@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import * as zod from "zod";
 import styles from "./Form.module.css";
 
@@ -92,13 +93,27 @@ export const Patient = () => {
     setErrors({});
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validation = cadastroSchema.safeParse(formData);
 
     if (validation.success) {
-      console.log("Cadastro bem sucedido", formData);
-      resetForm();
+      try {
+        const response = await axios.post('http://localhost:8080', formData, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.status === 200) {
+          console.log("Cadastro bem sucedido");
+          resetForm();
+        } else {
+          console.error("Erro ao cadastrar paciente:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erro de rede ao cadastrar paciente:", error);
+      }
     } else {
       const fieldErrors = validation.error.errors.reduce((acc, error) => {
         acc[error.path[0]] = error.message;
