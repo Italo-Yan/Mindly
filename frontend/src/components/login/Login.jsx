@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as zod from "zod";
-import { loginPaciente, /*loginProfisisonal*/ } from "../../Services/auth/authConfig"
+import { loginUser } from "../../Services/auth/authConfig"
 
 import styles from "./Login.module.css";
 
@@ -30,7 +30,7 @@ export function Login() {
 
     if (validation.success) {
       try {
-        const response = await loginPaciente(formData);
+        const response = await loginUser(formData);
         console.log(response);
         const token = response.data
         if (response.status == 200) {
