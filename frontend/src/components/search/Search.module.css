@@ -1,3 +1,176 @@
-.title {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--blue-100);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin: 20px auto;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  border: 1px solid var(--blue-500);
+  border-radius: 8px;
+  padding: 8px;
+  width: 450px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.searchBar input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 5px;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+.searchButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--blue-500);
+}
+
+.list {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 12px;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.listItem:hover {
+  background-color: #f9fafb;
+  transform: scale(1.02);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: bold;
+  color: var(--blue-500);
+  font-size: 16px;
+}
+
+.crp,
+.phone {
+  color: var(--gray);
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.modalOverlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  padding: 30px;
+  width: 400px;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  text-align: center;
+  position: relative;
+  opacity: 0;
+
+  background-color: var(--white);
+  transform: scale(0.8);
+  animation: scaleIn 0.3s forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  border: none;
+  font-size: 18px;
+
+  background: none;
+  color: var(--blue-500);
+  cursor: pointer;
+}
+
+.modalAvatar {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 15px;
+}
+
+.modalName {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--blue-500);
+  margin-top: 10px;
+}
+
+.modalCRP,
+.modalPhone,
+.modalBio,
+.modalDescription {
+  color: var(--gray);
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.modalDescription {
+  margin-top: 15px;
+  font-size: 14px;
   color: var(--gray);
 }
