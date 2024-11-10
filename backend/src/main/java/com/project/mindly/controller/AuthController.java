@@ -1,5 +1,6 @@
 package com.project.mindly.controller;
 
+import com.project.mindly.config.AuthenticationException;
 import com.project.mindly.dtos.userAuth.UserAuth;
 import com.project.mindly.service.AuthService;
 import jakarta.validation.Valid;
@@ -24,10 +25,9 @@ public class AuthController {
     public ResponseEntity<String> loginUsers(@RequestBody @Valid UserAuth data) {
         try {
             String token = authService.authenticateUser(data.email(), data.password());
-            if (token != null) {
-                return ResponseEntity.status(HttpStatus.OK).body(token);
-            }
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+            return ResponseEntity.status(HttpStatus.OK).body(token);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno do servidor");
         }

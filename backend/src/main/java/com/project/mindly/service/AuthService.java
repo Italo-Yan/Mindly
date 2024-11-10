@@ -1,12 +1,13 @@
 package com.project.mindly.service;
 
+import com.project.mindly.config.AuthenticationException;
 import com.project.mindly.enums.UserRoles;
+
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.PacienteRepository;
 import com.project.mindly.repository.ProfissionalRepository;
 import com.project.mindly.security.TokenService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,30 +27,25 @@ public class AuthService {
         this.tokenService = tokenService;
     }
 
-
-    public String authenticateUser(String email, String senha ) {
-        try {
-            Profissional profissional = profissionalRepository.findByEmailProf(email);
-            if(profissional != null) {
-                if(profissional.getRoles().equals(UserRoles.PROFISSIONAL)) {
-                    if (passwordEncoder.matches(senha, profissional.getPassword())) {
-                        return this.tokenService.generateTokenProfissional(profissional);
-                    }
-                }
-            } else {
-                Paciente paciente = pacienteRepository.findByEmailPaciente(email);
-                if(paciente != null) {
-                    if(paciente.getRoles().equals(UserRoles.PACIENTE)) {
-                        if(passwordEncoder.matches(senha, paciente.getPassword())) {
-                            return this.tokenService.generateTokenPaciente(paciente);
-                        }
-                    }
+    public String authenticateUser(String email, String senha) throws AuthenticationException {
+        Profissional profissional = profissionalRepository.findByEmailProf(email);
+        if (profissional != null) {
+            if (profissional.getRoles().equals(UserRoles.PROFISSIONAL)) {
+                if (passwordEncoder.matches(senha, profissional.getPassword())) {
+                    return this.tokenService.generateTokenProfissional(profissional);
                 }
             }
-            return new String("Usuario não encontrado com o email: "+ email);
-        } catch ( Exception e ) {
-            return null;
         }
+
+        Paciente paciente = pacienteRepository.findByEmailPaciente(email);
+        if (paciente != null) {
+            if (paciente.getRoles().equals(UserRoles.PACIENTE)) {
+                if (passwordEncoder.matches(senha, paciente.getPassword())) {
+                    return this.tokenService.generateTokenPaciente(paciente);
+                }
+            }
+        }
+
+        throw new AuthenticationException("Credenciais inválidas");
     }
 }
-

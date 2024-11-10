@@ -1,12 +1,20 @@
-import { api } from "../../config/apiConfig"
-
+import { api } from "../../config/apiConfig";
 
 const loginUser = async (data) => {
   try {
     const response = await api.post("/auth/login", data);
-    return response;
+    const responseFormatted = {
+      data: response.data,
+      status: response.status,
+    };
+    return responseFormatted;
   } catch (e) {
-    throw e;
+    console.log(e);
+    const responseFormatted = {
+      data: e.response.data,
+      status: e.status,
+    };
+    return responseFormatted;
   }
 };
 

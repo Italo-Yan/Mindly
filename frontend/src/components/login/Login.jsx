@@ -1,6 +1,6 @@
 import { useState } from "react";
 import * as zod from "zod";
-import { loginUser } from "../../Services/auth/authConfig"
+import { loginUser } from "../../Services/auth/authConfig";
 
 import styles from "./Login.module.css";
 
@@ -32,9 +32,9 @@ export function Login() {
       try {
         const response = await loginUser(formData);
         console.log(response);
-        const token = response.data
+
         if (response.status == 200) {
-          console.log("Cadastro bem-sucedido: ", token);
+          console.log("Cadastro bem-sucedido: ", response.data);
           resetForm();
         } else {
           console.error("Erro ao cadastrar:", response.statusText);
