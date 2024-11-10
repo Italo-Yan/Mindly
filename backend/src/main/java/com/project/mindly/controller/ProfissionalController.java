@@ -1,11 +1,9 @@
 package com.project.mindly.controller;
 
 
-import com.project.mindly.dtos.userAuth.UserAuth;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.dtos.profissional.ProfissionalDto;
 import com.project.mindly.dtos.profissional.ProfissionalDtoPatch;
-import com.project.mindly.service.AuthService;
 import com.project.mindly.service.ProfissionalService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -15,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +24,12 @@ public class ProfissionalController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProfissionalController.class);
     private final ProfissionalService profissionalService;
-    private final AuthService authService;
+
 
     @Autowired
-    public ProfissionalController(ProfissionalService profissionalService, AuthService authService) {
+    public ProfissionalController(ProfissionalService profissionalService) {
         this.profissionalService = profissionalService;
-        this.authService = authService;
+
     }
 
     @GetMapping
@@ -51,12 +47,12 @@ public class ProfissionalController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Profissional> createProfissional (@RequestBody @Valid ProfissionalDto data) {
+    public ResponseEntity<?> createProfissional (@RequestBody @Valid ProfissionalDto data) {
         try {
             Profissional profissional = profissionalService.saveProfissional(data);
             return ResponseEntity.status(HttpStatus.CREATED).body(profissional);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Ocorreu um erro inesperado", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

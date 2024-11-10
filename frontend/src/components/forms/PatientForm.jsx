@@ -1,35 +1,51 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import * as zod from "zod";
 import styles from "./Form.module.css";
+import {addPacient} from "../../Services/paciente/pacienteService"
 
 const cadastroSchema = zod.object({
-  nomeCompleto: zod
+  nome_paciente: zod
     .string()
     .min(15, { message: "Deve conter no mínimo 15 caracteres." })
     .max(100, { message: "Deve conter no máximo 100 caracteres." }),
-  cpf: zod
+  cpf_paciente: zod
     .string()
     .length(11, { message: "O CPF deve conter 11 dígitos." })
     .regex(/^\d+$/, { message: "O CPF deve conter apenas números." }),
-  endereco: zod
+  endereco_paciente: zod
     .string()
     .min(1, { message: "Endereço é obrigatório." }),
-  telefone: zod
+  telefone_paciente: zod
     .string()
     .min(10, { message: "O telefone deve conter no mínimo 10 dígitos." })
     .max(11, { message: "O telefone deve conter no máximo 11 dígitos." })
     .regex(/^\d+$/, { message: "O telefone deve conter apenas números." }),
-  email: zod
+  email_paciente: zod
     .string()
     .email({ message: "Formato de e-mail inválido." }),
-  senha: zod
+  senha_paciente: zod
     .string()
     .min(8, { message: "A senha deve ter pelo menos 8 caracteres." }),
+  nascimento_paciente: zod
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, {
+      message: "Data de nascimento deve estar no formato yyyy-mm-dd.",
+    })
+    .refine((date) => new Date(date) <= new Date(), {
+      message: "A data de nascimento deve ser no passado.",
+    }),
 });
 
-const InputField = ({ label, type, name, value, placeholder, onChange, error }) => (
+const InputField = ({
+  label,
+  type,
+  name,
+  value,
+  placeholder,
+  onChange,
+  error,
+}) => (
   <div>
     <label htmlFor={name}>{label}</label>
     <input
@@ -63,12 +79,13 @@ InputField.defaultProps = {
 
 export const Patient = () => {
   const [formData, setFormData] = useState({
-    nomeCompleto: '',
-    cpf: '',
-    endereco: '',
-    telefone: '',
-    email: '',
-    senha: '',
+    nome_paciente: "",
+    cpf_paciente: "",
+    nascimento_paciente: "",
+    endereco_paciente: "",
+    telefone_paciente: "",
+    email_paciente: "",
+    senha_paciente: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -83,12 +100,13 @@ export const Patient = () => {
 
   const resetForm = () => {
     setFormData({
-      nomeCompleto: '',
-      cpf: '',
-      endereco: '',
-      telefone: '',
-      email: '',
-      senha: '',
+      nome_paciente: "",
+      cpf_paciente: "",
+      nascimento_paciente: "",
+      endereco_paciente: "",
+      telefone_paciente: "",
+      email_paciente: "",
+      senha_paciente: "",
     });
     setErrors({});
   };
@@ -99,17 +117,14 @@ export const Patient = () => {
 
     if (validation.success) {
       try {
-        const response = await axios.post('http://localhost:8080', formData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.status === 200) {
+        
+        const response = await addPacient(formData);
+        console.log(response)
+        if (response.status === 201) {
           console.log("Cadastro bem sucedido");
           resetForm();
         } else {
-          console.error("Erro ao cadastrar paciente:", response.statusText);
+          console.error("Erro ao cadastrar paciente:", response.data);
         }
       } catch (error) {
         console.error("Erro de rede ao cadastrar paciente:", error);
@@ -130,17 +145,17 @@ export const Patient = () => {
         <InputField
           label="Nome Completo"
           type="text"
-          name="nomeCompleto"
-          value={formData.nomeCompleto}
+          name="nome_paciente"
+          value={formData.nome_paciente}
           placeholder="Digite seu nome completo"
           onChange={handleChange}
-          error={errors.nomeCompleto}
+          error={errors.nome_paciente}
         />
         <InputField
           label="CPF"
           type="text"
-          name="cpf"
-          value={formData.cpf}
+          name="cpf_paciente"
+          value={formData.cpf_paciente}
           placeholder="Digite seu CPF"
           onChange={handleChange}
           error={errors.cpf}
@@ -148,17 +163,26 @@ export const Patient = () => {
         <InputField
           label="Endereço"
           type="text"
-          name="endereco"
-          value={formData.endereco}
+          name="endereco_paciente"
+          value={formData.endereco_paciente}
           placeholder="Digite seu endereço"
           onChange={handleChange}
           error={errors.endereco}
         />
         <InputField
+          label="Data de Nascimento"
+          type="date"
+          name="nascimento_paciente"
+          value={formData.nascimento_paciente}
+          placeholder="Digite sua data de nascimento"
+          onChange={handleChange}
+          error={errors.dataNascimento}
+        />
+        <InputField
           label="Telefone"
           type="text"
-          name="telefone"
-          value={formData.telefone}
+          name="telefone_paciente"
+          value={formData.telefone_paciente}
           placeholder="Digite seu telefone"
           onChange={handleChange}
           error={errors.telefone}
@@ -166,8 +190,8 @@ export const Patient = () => {
         <InputField
           label="E-mail"
           type="email"
-          name="email"
-          value={formData.email}
+          name="email_paciente"
+          value={formData.email_paciente}
           placeholder="Digite seu email"
           onChange={handleChange}
           error={errors.email}
@@ -175,13 +199,15 @@ export const Patient = () => {
         <InputField
           label="Senha"
           type="password"
-          name="senha"
-          value={formData.senha}
+          name="senha_paciente"
+          value={formData.senha_paciente}
           placeholder="Digite sua senha"
           onChange={handleChange}
           error={errors.senha}
         />
-        <button className={styles.button} type="submit">Cadastrar</button>
+        <button className={styles.button} type="submit">
+          Cadastrar
+        </button>
       </form>
     </div>
   );

@@ -7,6 +7,7 @@ import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.ProfissionalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class ProfissionalService {
     }
 
     public Profissional saveProfissional (ProfissionalDto data) {
+        if (profissionalRepository.existsById(data.cpf())) {
+            throw new DataIntegrityViolationException("Profissional já está cadastrado.");
+        }
         Profissional profissional = new Profissional();
         profissional.setCpfProf(data.cpf());
         profissional.setNomeProf(data.nome());

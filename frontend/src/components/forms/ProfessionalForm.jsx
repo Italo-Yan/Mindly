@@ -1,11 +1,11 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import * as zod from "zod";
 import styles from "./Form.module.css";
+import {addProfissional} from "../../Services/profissional/profissionalService"
 
 const cadastroSchema = zod.object({
-  nomeCompleto: zod
+  nome: zod
     .string()
     .min(15, { message: "Deve conter no mínimo 15 caracteres." })
     .max(100, { message: "Deve conter no máximo 100 caracteres." }),
@@ -73,7 +73,7 @@ InputField.defaultProps = {
 
 export const Professional = () => {
   const [formData, setFormData] = useState({
-    nomeCompleto: '',
+    nome: '',
     cpf: '',
     crp: '',
     abordagemTeorica: '',
@@ -96,7 +96,7 @@ export const Professional = () => {
 
   const resetForm = () => {
     setFormData({
-      nomeCompleto: '',
+      nome: '',
       cpf: '',
       crp: '',
       abordagemTeorica: '',
@@ -115,17 +115,13 @@ export const Professional = () => {
 
     if (validation.success) {
       try {
-        const response = await axios.post('http://localhost:8080', formData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.status === 200) {
+        const response = await addProfissional(formData);
+        console.log(response)
+        if (response.status === 201) {
           console.log("Cadastro bem sucedido");
           resetForm();
         } else {
-          console.error("Erro ao cadastrar paciente:", response.statusText);
+          console.error("Erro ao cadastrar paciente:", response.data);
         }
       } catch (error) {
         console.error("Erro de rede ao cadastrar paciente:", error);
@@ -145,11 +141,11 @@ export const Professional = () => {
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <InputField
           label="Nome Completo"
-          name="nomeCompleto"
-          value={formData.nomeCompleto}
+          name="nome"
+          value={formData.nome}
           placeholder="Digite seu nome completo"
           onChange={handleChange}
-          error={errors.nomeCompleto}
+          error={errors.nome}
         />
         <InputField
           label="CPF"
