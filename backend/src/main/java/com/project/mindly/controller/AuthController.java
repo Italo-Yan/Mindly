@@ -2,7 +2,6 @@ package com.project.mindly.controller;
 
 import com.project.mindly.dtos.userAuth.UserAuth;
 import com.project.mindly.service.AuthService;
-import com.project.mindly.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

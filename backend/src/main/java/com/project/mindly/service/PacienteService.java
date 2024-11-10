@@ -7,6 +7,7 @@ import com.project.mindly.dtos.paciente.PacienteDtoPatch;
 import com.project.mindly.repository.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,18 +38,21 @@ public class PacienteService {
 
     public Paciente savePaciente(PacienteDto data) {
 
+        if (pacienteRepository.existsById(data.cpf_paciente())) {
+            throw new DataIntegrityViolationException("Paciente já está cadastrado.");
+        }
         Paciente paciente = new Paciente();
         paciente.setCpfPaciente(data.cpf_paciente());
         paciente.setNomePaciente(data.nome_paciente());
         paciente.setEmailPaciente(data.email_paciente());
-        String result = passwordEncoder.encode(data.senha());
+        String result = passwordEncoder.encode(data.senha_paciente());
         paciente.setSenha(result);
-        paciente.setNascimento(data.nascimento());
-        paciente.setMedicacao(data.medicacao());
+        paciente.setNascimento(data.nascimento_paciente());
         paciente.setEndPaciente(data.endereco_paciente());
         paciente.setTelPaciente(data.telefone_paciente());
         paciente.setRoles(UserRoles.PACIENTE);
         return pacienteRepository.save(paciente);
+
     }
 
     public Paciente updatePaciente(String cpf, PacienteDtoPatch data) {
@@ -56,8 +60,8 @@ public class PacienteService {
                 .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com CPF: " + cpf));
         paciente.setNomePaciente(data.nome_paciente());
         paciente.setEmailPaciente(data.email_paciente());
-        paciente.setSenha(data.senha());
-        paciente.setNascimento(data.nascimento());
+        paciente.setSenha(data.senha_paciente());
+        paciente.setNascimento(data.nascimento_paciente());
         paciente.setMedicacao(data.medicacao());
         paciente.setEndPaciente(data.endereco_paciente());
         paciente.setTelPaciente(data.telefone_paciente());

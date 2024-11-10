@@ -57,12 +57,12 @@ public class PacienteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Paciente> createPaciente(@RequestBody @Valid PacienteDto data) {
+    public ResponseEntity<?> createPaciente(@RequestBody @Valid PacienteDto data) {
         try {
             Paciente paciente = pacienteService.savePaciente(data);
             return ResponseEntity.status(HttpStatus.CREATED).body(paciente);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
         } catch (Exception e) {
             logger.error("Ocorreu um erro inesperado", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

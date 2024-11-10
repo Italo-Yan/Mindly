@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         // EndPoint da aplicação //
-                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/swagger-config").permitAll() // Desbloquear swagger
+                        /*.requestMatchers(HttpMethod.GET, "/v3/api-docs/swagger-config").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll() // Desbloquear swagger
                         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
@@ -61,8 +61,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.PATCH,"/paciente/**").hasRole("PACIENTE")
                         .requestMatchers(HttpMethod.DELETE,"/paciente/**").hasRole("PACIENTE")
-                        .requestMatchers(HttpMethod.GET,"/profissionais/publico").hasRole("PACIENTE")
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.GET,"/profissionais/publico").hasRole("PACIENTE")*/
+                        .anyRequest().permitAll())
                  .addFilterBefore(securityFilter,UsernamePasswordAuthenticationFilter.class)
                  .build();
     }
