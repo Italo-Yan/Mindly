@@ -54,3 +54,68 @@ h2 {
   text-align: left;
   color: var(--gray);
 }
+
+/*Responsividade */
+@media (max-width: 1200px) {
+  .servicesGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas grandes */
+    gap: 30px;
+  }
+
+  h2 {
+    font-size: 36px; /* Ajustar tamanho da fonte */
+  }
+}
+
+@media (max-width: 768px) {
+  .servicesGrid {
+    grid-template-columns: 1fr; /* 1 coluna em tablets */
+    gap: 20px;
+  }
+
+  h2 {
+    font-size: 28px; /* Ajustar tamanho da fonte */
+    margin-bottom: 50px; /* Ajustar margem inferior */
+  }
+
+  .serviceBox {
+    padding: 15px; /* Ajustar padding */
+  }
+
+  .icon h3 {
+    font-size: 1.8rem; /* Ajustar tamanho da fonte */
+  }
+
+  .description {
+    font-size: 0.9rem; /* Ajustar tamanho da fonte */
+  }
+}
+
+@media (max-width: 576px) {
+  .servicesContainer {
+    padding: 10px; /* Ajustar padding */
+    margin-top: 3rem; /* Ajustar margem superior */
+  }
+
+  .servicesGrid {
+    gap: 15px; /* Ajustar gap */
+  }
+
+  h2 {
+    font-size: 24px; /* Ajustar tamanho da fonte */
+    margin-bottom: 40px; /* Ajustar margem inferior */
+  }
+
+  .serviceBox {
+    padding: 10px; /* Ajustar padding */
+  }
+
+  .icon h3 {
+    font-size: 1.5rem; /* Ajustar tamanho da fonte */
+  }
+
+  .description {
+    font-size: 0.8rem; /* Ajustar tamanho da fonte */
+  }
+}
+

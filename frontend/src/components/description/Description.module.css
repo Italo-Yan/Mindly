@@ -32,3 +32,64 @@ main h1 {
 .button:hover {
   background: var(--white);
 }
+
+/* Estilos Responsivos */
+@media (max-width: 1200px) {
+  main {
+    margin: 5rem 1rem 0 2rem; /* Ajustar margens */
+  }
+
+  main h1 {
+    font-size: 2rem; /* Ajustar tamanho da fonte */
+  }
+}
+
+@media (max-width: 992px) {
+  main {
+    margin: 3rem 1rem 0 1rem; /* Ajustar margens */
+  }
+
+  main h1 {
+    font-size: 1.75rem; /* Ajustar tamanho da fonte */
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    margin: 2rem 1rem 0 1rem; /* Ajustar margens */
+    max-width: 90%; /* Ajustar largura */
+  }
+
+  main p {
+    font-size: 0.9rem; /* Ajustar tamanho da fonte */
+  }
+
+  main h1 {
+    font-size: 1.5rem; /* Ajustar tamanho da fonte */
+  }
+
+  .button {
+    padding: 0.5rem 1rem; /* Ajustar padding do botão */
+    font-size: 0.9rem; /* Ajustar tamanho da fonte do botão */
+  }
+}
+
+@media (max-width: 576px) {
+  main {
+    margin: 1rem 0.5rem 0 0.5rem; /* Ajustar margens */
+    max-width: 100%; /* Ajustar largura */
+  }
+
+  main p {
+    font-size: 0.8rem; /* Ajustar tamanho da fonte */
+  }
+
+  main h1 {
+    font-size: 1.25rem; /* Ajustar tamanho da fonte */
+  }
+
+  .button {
+    padding: 0.4rem 0.8rem; /* Ajustar padding do botão */
+    font-size: 0.8rem; /* Ajustar tamanho da fonte do botão */
+  }
+}

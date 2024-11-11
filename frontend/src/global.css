@@ -14,7 +14,6 @@
   --gray: #495057;
 
   --red: #AB222E;
-
 }
 
 html {
@@ -31,13 +30,13 @@ body {
   background: var(--white);
   color: var(--black);
   -webkit-font-smoothing: antialiased;
+  font-size: 1rem;
 }
 
 body::before {
   content: "";
   width: 100%;
   height: 35rem;
-
   position: absolute;
   top: 0;
   left: 0;
@@ -49,7 +48,33 @@ body,
 input,
 textarea,
 button {
-	font-family: "DM sans", sans-serif;
-	font-weight: 400;
-	font-size: 1rem;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
 }
+
+/* Estilos Responsivos */
+@media (max-width: 1200px) {
+  body::before {
+    height: 30rem; /* Ajustar altura para telas grandes */
+  }
+}
+
+@media (max-width: 992px) {
+  body::before {
+    height: 25rem; /* Ajustar altura para telas médias */
+  }
+}
+
+@media (max-width: 768px) {
+  body::before {
+    height: 20rem; /* Ajustar altura para tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  body::before {
+    height: 15rem; /* Ajustar altura para smartphones */
+  }
+}
+

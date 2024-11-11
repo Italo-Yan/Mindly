@@ -1,7 +1,9 @@
 .aboutSection {
   margin-top: 5rem;
   background-color: var(--beige);
-  padding: 60px 20px;
+  padding: 60px 0 ;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Garante que não haverá scroll horizontal */
 }
 
 .aboutContent {
@@ -40,4 +42,77 @@
   font-size: 1rem;
   line-height: 1.6;
   color: var(--gray);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .aboutContent {
+    flex-direction: column; /* Alinha os itens em coluna */
+  }
+
+  .aboutImage img {
+    max-width: 28rem; /* Ajusta a largura máxima da imagem */
+  }
+
+  .aboutText {
+    max-width: 32rem; /* Ajusta a largura máxima do texto */
+  }
+
+  .aboutText h2 {
+    font-size: 2rem; /* Ajusta o tamanho da fonte */
+  }
+}
+
+@media (max-width: 992px) {
+  .aboutContent {
+    padding: 40px 20px; /* Ajusta o padding */
+  }
+
+  .aboutImage img {
+    max-width: 24rem; /* Ajusta a largura máxima da imagem */
+  }
+
+  .aboutText {
+    max-width: 28rem; /* Ajusta a largura máxima do texto */
+  }
+
+  .aboutText h2 {
+    font-size: 1.75rem; /* Ajusta o tamanho da fonte */
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutContent {
+    padding: 30px 15px; /* Ajusta o padding */
+  }
+
+  .aboutImage img {
+    max-width: 20rem; /* Ajusta a largura máxima da imagem */
+  }
+
+  .aboutText {
+    max-width: 25rem; /* Ajusta a largura máxima do texto */
+  }
+
+  .aboutText h2 {
+    font-size: 1.5rem; /* Ajusta o tamanho da fonte */
+  }
+}
+
+@media (max-width: 576px) {
+  .aboutContent {
+    padding: 20px 10px; /* Ajusta o padding */
+  }
+
+  .aboutImage img {
+    max-width: 18rem; /* Ajusta a largura máxima da imagem */
+  }
+
+  .aboutText {
+    max-width: 22rem; /* Ajusta a largura máxima do texto */
+  }
+
+  .aboutText h2 {
+    font-size: 1.25rem; /* Ajusta o tamanho da fonte */
+  }
 }
