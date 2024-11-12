@@ -46,6 +46,28 @@
   margin-bottom: 20px;
 }
 
+/* Estilos específicos para o card do profissional */
+.professionalCard {
+  border-color: var(--green-500);
+  background-color: var(--green-100);
+}
+
+.professionalCard h2,
+.professionalCard h3 {
+  color: var(--green-500);
+}
+
+/* Estilos específicos para o card do paciente */
+.patientCard {
+  border-color: var(--orange-500);
+  background-color: var(--orange-100);
+}
+
+.patientCard h2,
+.patientCard h3 {
+  color: var(--orange-500);
+}
+
 .viewButton {
   border: 1px solid var(--blue-500);
   border-radius: 40px;

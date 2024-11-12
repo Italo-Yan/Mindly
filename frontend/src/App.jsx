@@ -1,12 +1,15 @@
-import { BrowserRouter } from "react-router-dom"
-import { Router } from './routes/Router'
+import { BrowserRouter } from "react-router-dom";
+import { Router } from './routes/Router';
+import { AuthProvider } from './Services/auth/authProvider';
 
-import "./global.css"
+import "./global.css";
 
 export function App() {
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
-  )
+    <AuthProvider>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }

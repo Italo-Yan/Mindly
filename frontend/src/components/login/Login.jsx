@@ -1,21 +1,17 @@
 import { useState } from "react";
-import { loginUser } from "../../Services/auth/authConfig";
 import { useNavigate } from "react-router-dom";
-import * as zod from "zod";
+
+import { loginUser } from "../../Services/auth/authConfig";
+import { useAuth } from "../../Services/auth/useAuth";
+import { validateLoginData } from "../../Services/auth/authUtils";
 
 import styles from "./Login.module.css";
-
-const loginSchema = zod.object({
-  email: zod.string().min(1, { message: "O campo Login é obrigatório." }),
-  password: zod
-    .string()
-    .min(4, { message: "A senha deve ter pelo menos 4 caracteres." }),
-});
 
 export function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
-  const { generalError, setGeneralError } = useState("");
+  const [generalError, setGeneralError] = useState("");
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,19 +21,22 @@ export function Login() {
   const resetForm = () => {
     setFormData({ email: "", password: "" });
     setErrors({ email: "", password: "" });
+    setGeneralError("")
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validation = loginSchema.safeParse(formData);
+    const validation = validateLoginData(formData);
 
     if (validation.success) {
       try {
         const response = await loginUser(formData);
         console.log(response);
 
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("Cadastro bem-sucedido: ", response.data);
+          const { token, role } = response.data;
+          login(token, role)
           resetForm();
           navigate("/perfil");
         } else if (response.status === 401) {
@@ -94,7 +93,7 @@ export function Login() {
               <p className={styles.error}>{errors.password}</p>
             )}
           </div>
-          {generalError && <p className={styles.error}>General Error</p>}
+          {generalError && <p className={styles.error}>{generalError}</p>}
           <button type="submit" className={styles.button}>
             LOGIN
           </button>
