@@ -1,6 +1,7 @@
 package com.project.mindly.service;
 
 import com.project.mindly.config.AuthenticationException;
+import com.project.mindly.dtos.userAuth.AuthResponse;
 import com.project.mindly.enums.UserRoles;
 
 import com.project.mindly.model.paciente.Paciente;
@@ -27,12 +28,13 @@ public class AuthService {
         this.tokenService = tokenService;
     }
 
-    public String authenticateUser(String email, String senha) throws AuthenticationException {
+    public AuthResponse authenticateUser(String email, String senha) throws AuthenticationException {
         Profissional profissional = profissionalRepository.findByEmailProf(email);
         if (profissional != null) {
             if (profissional.getRoles().equals(UserRoles.PROFISSIONAL)) {
                 if (passwordEncoder.matches(senha, profissional.getPassword())) {
-                    return this.tokenService.generateTokenProfissional(profissional);
+                    String token = this.tokenService.generateTokenProfissional(profissional);
+                    return new AuthResponse(token,UserRoles.PROFISSIONAL);
                 }
             }
         }
@@ -41,7 +43,8 @@ public class AuthService {
         if (paciente != null) {
             if (paciente.getRoles().equals(UserRoles.PACIENTE)) {
                 if (passwordEncoder.matches(senha, paciente.getPassword())) {
-                    return this.tokenService.generateTokenPaciente(paciente);
+                    String token = this.tokenService.generateTokenPaciente(paciente);
+                    return new AuthResponse(token,UserRoles.PACIENTE);
                 }
             }
         }
