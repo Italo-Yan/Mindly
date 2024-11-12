@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-
-const AuthContext = createContext();
+import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState({ token: "", role: "" });
@@ -21,6 +20,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-AuthProvider.propTypes = { children: PropTypes.node };
-
-export const useAuth = () => useContext(AuthContext);
+AuthProvider.propTypes = {
+  children: PropTypes.node,
+};

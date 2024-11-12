@@ -9,6 +9,7 @@ import styles from "./Profile.module.css";
 export function Profile() {
   const { authData } = useAuth();
   const isProfessional = authData.role === "PROFISSIONAL";
+  const isPatient = authData.role === "PACIENTE";
 
   return (
     <div className={styles.profilePage}>
@@ -21,7 +22,7 @@ export function Profile() {
 
       <div className={styles.cardContainer}>
         {/* Conteúdo específico para Profissionais */}
-        {isProfessional ? (
+        {isProfessional && (
           <>
             <div className={`${styles.card} ${styles.professionalCard}`}>
               <h2>LISTA DE PACIENTES</h2>
@@ -41,8 +42,10 @@ export function Profile() {
               <EditButton onClick={() => console.log("Editar Agenda")} />
             </div>
           </>
-        ) : (
-          /* Conteúdo específico para Pacientes */
+        )}
+
+        {/* Conteúdo específico para Pacientes */}
+        {isPatient && (
           <div className={`${styles.card} ${styles.patientCard}`}>
             <h2>PRÓXIMAS CONSULTAS</h2>
             <div className={styles.appointments}>
