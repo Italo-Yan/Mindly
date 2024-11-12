@@ -1,6 +1,7 @@
 import { useState } from "react";
-import * as zod from "zod";
 import { loginUser } from "../../Services/auth/authConfig";
+import { useNavigate } from "react-router-dom";
+import * as zod from "zod";
 
 import styles from "./Login.module.css";
 
@@ -8,12 +9,13 @@ const loginSchema = zod.object({
   email: zod.string().min(1, { message: "O campo Login é obrigatório." }),
   password: zod
     .string()
-    .min(4, { message: "A senha deve ter pelo menos 6 caracteres." }),
+    .min(4, { message: "A senha deve ter pelo menos 4 caracteres." }),
 });
 
 export function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -36,6 +38,7 @@ export function Login() {
         if (response.status == 200) {
           console.log("Cadastro bem-sucedido: ", response.data);
           resetForm();
+          navigate("/perfil");
         } else {
           console.error("Erro ao cadastrar:", response.statusText);
         }

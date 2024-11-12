@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { addPacient } from "../../Services/paciente/pacienteService"
+
 import PropTypes from "prop-types";
 import * as zod from "zod";
+
 import styles from "./Form.module.css";
-import {addPacient} from "../../Services/paciente/pacienteService"
 
 const cadastroSchema = zod.object({
   nome_paciente: zod
     .string()
-    .min(15, { message: "Deve conter no mínimo 15 caracteres." })
+    .min(5, { message: "Deve conter no mínimo 5 caracteres." })
     .max(100, { message: "Deve conter no máximo 100 caracteres." }),
   cpf_paciente: zod
     .string()
@@ -89,6 +93,7 @@ export const Patient = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -117,12 +122,13 @@ export const Patient = () => {
 
     if (validation.success) {
       try {
-        
+
         const response = await addPacient(formData);
         console.log(response)
         if (response.status === 201) {
           console.log("Cadastro bem sucedido");
           resetForm();
+          navigate("/login");
         } else {
           console.error("Erro ao cadastrar paciente:", response.data);
         }
