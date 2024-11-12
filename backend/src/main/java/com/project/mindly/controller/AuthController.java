@@ -24,7 +24,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> loginUsers(@RequestBody @Valid UserAuth data) {
         try {
-            String token = authService.authenticateUser(data.email(), data.password());
+            String token = String.valueOf(authService.authenticateUser(data.email(), data.password()));
             return ResponseEntity.status(HttpStatus.OK).body(token);
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
