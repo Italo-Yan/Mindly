@@ -15,6 +15,7 @@ const loginSchema = zod.object({
 export function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
+  const { generalError, setGeneralError } = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -39,11 +40,16 @@ export function Login() {
           console.log("Cadastro bem-sucedido: ", response.data);
           resetForm();
           navigate("/perfil");
-        } else {
-          console.error("Erro ao cadastrar:", response.statusText);
+        } else if (response.status === 401) {
+          setGeneralError("Email ou senha incorretos.");
+        }
+        else {
+          console.error("Erro ao fazer login:", response.statusText);
+          setGeneralError("Erro ao tentar fazer login. Tente novamente.");
         }
       } catch (error) {
         console.error("Erro de rede:", error);
+        setGeneralError("Erro de rede. Verifique sua conexão.");
       }
     } else {
       const fieldErrors = {};
@@ -88,6 +94,7 @@ export function Login() {
               <p className={styles.error}>{errors.password}</p>
             )}
           </div>
+          {generalError && <p className={styles.error}>General Error</p>}
           <button type="submit" className={styles.button}>
             LOGIN
           </button>
