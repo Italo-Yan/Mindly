@@ -137,7 +137,7 @@ export const Professional = () => {
   };
 
   return (
-    <div>
+    <div className={styles.fundoForm}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <InputField
           label="Nome Completo"
