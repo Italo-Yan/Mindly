@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { addProfissional } from "../../Services/profissional/profissionalService"
+import { SuccessPopup } from "../popup/Popup";
 
 import PropTypes from "prop-types";
 import * as zod from "zod";
@@ -89,6 +90,7 @@ export const Professional = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [showPopup, setShowPopup] = useState(false)
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -125,7 +127,12 @@ export const Professional = () => {
         if (response.status === 201) {
           console.log("Cadastro bem sucedido");
           resetForm();
-          navigate("/login");
+          setShowPopup();
+
+          setTimeout(() => {
+            setShowPopup(false);
+            navigate("/login");
+          }, 3000);
         } else {
           console.error("Erro ao cadastrar paciente:", response.data);
         }
@@ -144,6 +151,7 @@ export const Professional = () => {
 
   return (
     <div className={styles.fundoForm}>
+      {showPopup && <SuccessPopup />}
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <InputField
           label="Nome Completo"
