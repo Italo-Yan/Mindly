@@ -9,9 +9,9 @@ import styles from "./Profile.module.css";
 export function Profile() {
   const { authData } = useAuth();
 
-  if (!authData || authData.role) {
-    return <div>Carregando...</div>
-  }
+  // if (!authData || authData.role) {
+  //   return <div>Carregando...</div>
+  // }
 
   const isProfessional = authData.role === "PROFISSIONAL";
   const isPatient = authData.role === "PACIENTE";
@@ -44,7 +44,9 @@ export function Profile() {
                 <h3>NOVEMBRO</h3>
                 <p>Horários Disponíveis e Indisponíveis</p>
               </div>
+              <NavLink to={"/schedule/professional"}>
               <EditButton onClick={() => console.log("Editar Agenda")} />
+              </NavLink>
             </div>
           </>
         )}
