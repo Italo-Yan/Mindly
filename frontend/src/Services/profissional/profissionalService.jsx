@@ -8,4 +8,13 @@ const addProfissional = async (data) => {
     throw e;
   }
 };
-export { addProfissional };
+
+const getProfisisonalPublic = async () => {
+  try {
+    const response = await api.get("/profissionais/publico");
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+export { addProfissional, getProfisisonalPublic };

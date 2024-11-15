@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Avatar } from "../avatar/Avatar";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import styles from "./Search.module.css";
+import { getProfisisonalPublic } from "../../Services/profissional/profissionalService";
 
-const professionals = [
-  { name: "Maria Oliveira", crp: "CRP 1234/04", phone: "75123456789", bio: "Psicóloga especialista em Terapia Cognitivo-Comportamental.", description: "Maria é especialista em TCC e ajuda seus pacientes a desenvolver técnicas para lidar com pensamentos e comportamentos desafiadores." },
-  { name: "Maria Oliveira", crp: "CRP 1234/04", phone: "75123456789", bio: "Psicóloga especialista em Terapia Cognitivo-Comportamental.", description: "Maria é especialista em TCC e ajuda seus pacientes a desenvolver técnicas para lidar com pensamentos e comportamentos desafiadores." },
-  { name: "Maria Oliveira", crp: "CRP 1234/04", phone: "75123456789", bio: "Psicóloga especialista em Terapia Cognitivo-Comportamental.", description: "Maria é especialista em TCC e ajuda seus pacientes a desenvolver técnicas para lidar com pensamentos e comportamentos desafiadores." },
-  { name: "Maria Oliveira", crp: "CRP 1234/04", phone: "75123456789", bio: "Psicóloga especialista em Terapia Cognitivo-Comportamental.", description: "Maria é especialista em TCC e ajuda seus pacientes a desenvolver técnicas para lidar com pensamentos e comportamentos desafiadores." },
-  { name: "Maria Oliveira", crp: "CRP 1234/04", phone: "75123456789", bio: "Psicóloga especialista em Terapia Cognitivo-Comportamental.", description: "Maria é especialista em TCC e ajuda seus pacientes a desenvolver técnicas para lidar com pensamentos e comportamentos desafiadores." },
-]
+const professionals = async () => {
+  const response = await getProfisisonalPublic();
+  console.log(response);
+  return response;
+};
 
 export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,11 +20,11 @@ export const Search = () => {
 
   const openProfile = (professional) => {
     setSelectedProfessional(professional);
-  }
+  };
 
   const closeProfile = () => {
-    setSelectedProfessional(null)
-  }
+    setSelectedProfessional(null);
+  };
 
   return (
     <div className={styles.container}>
@@ -36,7 +35,9 @@ export const Search = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className={styles.searchButton}><MagnifyingGlass size={25} /></button>
+        <button className={styles.searchButton}>
+          <MagnifyingGlass size={25} />
+        </button>
       </div>
 
       <div className={styles.list}>
@@ -59,13 +60,17 @@ export const Search = () => {
       {selectedProfessional && (
         <div className={styles.modalOverlay} onClick={closeProfile}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.closeButton} onClick={closeProfile}><X size={25} /></button>
+            <button className={styles.closeButton} onClick={closeProfile}>
+              <X size={25} />
+            </button>
             <Avatar className={styles.modalAvatar} />
             <h2 className={styles.modalName}>{selectedProfessional.name}</h2>
             <p className={styles.modalCRP}>{selectedProfessional.crp}</p>
             <p className={styles.modalPhone}>{selectedProfessional.phone}</p>
             <p className={styles.modalBio}>{selectedProfessional.bio}</p>
-            <p className={styles.modalDescription}>{selectedProfessional.description}</p>
+            <p className={styles.modalDescription}>
+              {selectedProfessional.description}
+            </p>
           </div>
         </div>
       )}
