@@ -1,6 +1,7 @@
 package com.project.mindly.controller;
 
 import com.project.mindly.config.AuthenticationException;
+import com.project.mindly.dtos.userAuth.AuthResponse;
 import com.project.mindly.dtos.userAuth.UserAuth;
 import com.project.mindly.service.AuthService;
 import jakarta.validation.Valid;
@@ -22,10 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUsers(@RequestBody @Valid UserAuth data) {
+    public ResponseEntity<?> loginUsers(@RequestBody @Valid UserAuth data) {
         try {
-            String token = String.valueOf(authService.authenticateUser(data.email(), data.password()));
-            return ResponseEntity.status(HttpStatus.OK).body(token);
+            AuthResponse authResponse = authService.authenticateUser(data.email(), data.password());
+            return ResponseEntity.status(HttpStatus.OK).body(authResponse);
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (Exception e) {

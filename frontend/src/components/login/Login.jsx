@@ -36,6 +36,7 @@ export function Login() {
         if (response.status === 200) {
           console.log("Cadastro bem-sucedido: ", response.data);
           const { token, role } = response.data;
+          console.log(token,role)
           login(token, role)
           resetForm();
           navigate("/perfil");
