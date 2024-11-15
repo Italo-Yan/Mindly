@@ -1,0 +1,131 @@
+.schedulePage {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scheduleContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section {
+  width: 400px;
+  background-color: var(--white);
+  border: 1px solid var(--blue-500);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.scheduleContainer h2 {
+  font-size: 1.5rem;
+  color: var(--blue-500);
+  margin-bottom: 20px;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar p {
+  font-size: 1rem;
+  color: var(--black); /* Garantir a mesma cor do texto das consultas */
+  margin: 10px 0;
+}
+
+.appointmentList {
+  width: 400px;
+  background-color: var(--white);
+  border: 1px solid var(--blue-500);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.appointmentList p {
+  font-size: 1rem;
+  color: var(--black);
+  margin: 10px 0;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px
+}
+
+.button {
+  padding: 10px 20px;
+  border: 1px solid var(--blue-500);
+  border-radius: 5px;
+  background-color: var(--white);
+  color: var(--blue-500);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--blue-500);
+  color: var(--white);
+}
+
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .section {
+    width: 350px;
+    padding: 15px;
+  }
+  .scheduleContainer h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .section {
+    width: 300px;
+    padding: 15px;
+  }
+  .scheduleContainer h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .scheduleContainer h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .section {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .scheduleContainer h2 {
+    font-size: 1.1rem;
+  }
+  .button {
+    width: 100%;
+    padding: 10px 0;
+  }
+  .buttonContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+  

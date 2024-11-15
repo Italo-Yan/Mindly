@@ -44,7 +44,9 @@ export function Profile() {
                 <h3>NOVEMBRO</h3>
                 <p>Horários Disponíveis e Indisponíveis</p>
               </div>
+              <NavLink to={"/schedule/professional"}>
               <EditButton onClick={() => console.log("Editar Agenda")} />
+              </NavLink>
             </div>
           </>
         )}
