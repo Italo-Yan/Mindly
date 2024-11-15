@@ -6,9 +6,7 @@ import com.project.mindly.enums.UserRoles;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.ProfissionalRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,4 +72,10 @@ public class ProfissionalService {
                 .orElseThrow(()-> new EntityNotFoundException("Profissional não encontrado com CPF: " + cpf));
         profissionalRepository.delete(profissional);
     }
+
+    public Optional<List<Profissional>> findProfissionalByName(String nome) {
+        List<Profissional> profissionais = profissionalRepository.findByNomeProf(nome);
+        return profissionais.isEmpty() ? Optional.empty() : Optional.of(profissionais);
+    }
+
 }

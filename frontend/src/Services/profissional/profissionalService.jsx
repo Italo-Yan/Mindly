@@ -17,4 +17,13 @@ const getProfisisonalPublic = async () => {
     throw e;
   }
 };
-export { addProfissional, getProfisisonalPublic };
+
+const searchProfissionalPublicName = async (data) => {
+  try {
+    const response = await api.get("/profissionais/publico/nome/" + data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+export { addProfissional, getProfisisonalPublic, searchProfissionalPublicName };

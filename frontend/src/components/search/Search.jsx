@@ -1,22 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar } from "../avatar/Avatar";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import styles from "./Search.module.css";
-import { getProfisisonalPublic } from "../../Services/profissional/profissionalService";
-
-const professionals = async () => {
-  const response = await getProfisisonalPublic();
-  console.log(response);
-  return response;
-};
+import {
+  getProfisisonalPublic,
+  searchProfissionalPublicName,
+} from "../../Services/profissional/profissionalService";
 
 export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [professionals, setProfessionals] = useState([]);
   const [selectedProfessional, setSelectedProfessional] = useState(null);
 
   const filteredProfessionals = professionals.filter((professional) =>
-    professional.name.toLowerCase().includes(searchTerm.toLowerCase())
+    professional.nomeProf.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(() => {
+    getProfessionals();
+    searhProfissionals();
+  }, []);
+
+  const getProfessionals = async () => {
+    const response = await getProfisisonalPublic();
+    setProfessionals(Array.from(response.data));
+    return response;
+  };
+
+  console.log(professionals);
+  console.log(searchTerm);
+
+  const searhProfissionals = async (searchTerm) => {
+    const response = await searchProfissionalPublicName(searchTerm);
+    console.log(response)
+    return response
+  };
 
   const openProfile = (professional) => {
     setSelectedProfessional(professional);
@@ -44,14 +62,13 @@ export const Search = () => {
         {filteredProfessionals.map((professional) => (
           <div
             className={styles.listItem}
-            key={professional.id}
+            key={professional.crp}
             onClick={() => openProfile(professional)}
           >
             <Avatar />
             <div className={styles.info}>
-              <span className={styles.name}>{professional.name}</span>
+              <span className={styles.name}>{professional.nomeProf}</span>
               <span className={styles.crp}>{professional.crp}</span>
-              <span className={styles.phone}>{professional.phone}</span>
             </div>
           </div>
         ))}
@@ -64,12 +81,15 @@ export const Search = () => {
               <X size={25} />
             </button>
             <Avatar className={styles.modalAvatar} />
-            <h2 className={styles.modalName}>{selectedProfessional.name}</h2>
+            <h2 className={styles.modalName}>
+              {selectedProfessional.nomeProf}
+            </h2>
             <p className={styles.modalCRP}>{selectedProfessional.crp}</p>
-            <p className={styles.modalPhone}>{selectedProfessional.phone}</p>
-            <p className={styles.modalBio}>{selectedProfessional.bio}</p>
+            <p className={styles.modalBio}>
+              {selectedProfessional.abordagemTeorica}
+            </p>
             <p className={styles.modalDescription}>
-              {selectedProfessional.description}
+              {selectedProfessional.descricaoProf}
             </p>
           </div>
         </div>

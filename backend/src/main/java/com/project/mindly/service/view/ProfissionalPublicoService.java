@@ -27,4 +27,9 @@ public class ProfissionalPublicoService {
         return Optional.ofNullable(profissionalPublicoRepository.findById(crp)
                 .orElseThrow(()-> new EntityNotFoundException("Profissional não encontrado com  o CRP: "+ crp)));
     }
+
+    public Optional<List<ProfissionalPublicoView>> findProfissionalPublicoByName(String nome) {
+        List<ProfissionalPublicoView> profissionais = profissionalPublicoRepository.findByNomeProf(nome);
+        return profissionais.isEmpty() ? Optional.empty() : Optional.of(profissionais);
+    }
 }

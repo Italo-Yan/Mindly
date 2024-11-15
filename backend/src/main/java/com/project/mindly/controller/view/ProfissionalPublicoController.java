@@ -34,7 +34,14 @@ public class ProfissionalPublicoController {
         return profissionalPublicoView;
     }
 
-    @GetMapping("/{crp}")
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<ProfissionalPublicoView>> getByNameProfisisonal(@PathVariable @Valid String nome) {
+        return profissionalPublicoService.findProfissionalPublicoByName(nome)
+                .map(result-> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/crp/{crp}")
     public ResponseEntity<ProfissionalPublicoView> getProfissionalPublicoByCrp(@PathVariable @Valid String crp) {
         return profissionalPublicoService.findProfissionalPublicoByCrp(crp)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))

@@ -39,10 +39,17 @@ public class ProfissionalController {
         return profissional;
     }
 
-    @GetMapping("/{cpf}")
+    @GetMapping("/cpf/{cpf}")
     public ResponseEntity<Profissional> getByCpfProfissional(@PathVariable @Valid String cpf) {
         return profissionalService.findProfissionalById(cpf)
                 .map(result -> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<Profissional>> getByNameProfisisonal(@PathVariable @Valid String nome) {
+        return profissionalService.findProfissionalByName(nome)
+                .map(result-> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
