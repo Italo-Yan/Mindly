@@ -8,5 +8,13 @@ const addPacient = async (data) => {
     throw e;
   }
 };
+const getPacienteByEmail = async (data) => {
+  try {
+    const response = await api.get("/paciente/email/" + data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
 
-export {addPacient};
+export { addPacient, getPacienteByEmail };

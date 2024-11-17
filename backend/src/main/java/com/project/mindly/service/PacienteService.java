@@ -1,14 +1,13 @@
 package com.project.mindly.service;
 
+import com.project.mindly.dtos.paciente.PacienteDtoResponse;
 import com.project.mindly.enums.UserRoles;
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.dtos.paciente.PacienteDto;
 import com.project.mindly.dtos.paciente.PacienteDtoPatch;
 import com.project.mindly.repository.PacienteRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +33,12 @@ public class PacienteService {
     public Optional<Paciente> findPacienteById(String id) {
         return Optional.ofNullable(pacienteRepository.findById(id) //  retorna um Optional ou um Optional.empty()
                 .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com o CPF: " + id)));
+    }
+
+    public Optional<PacienteDtoResponse> findPacienteByEmail(String email) {
+        Paciente paciente = Optional.ofNullable(pacienteRepository.findByEmailPaciente(email)) //  retorna um Optional ou um Optional.empty()
+                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com o Email: " + email));
+        return Optional.ofNullable(convertToDto(paciente));
     }
 
     public Paciente savePaciente(PacienteDto data) {
@@ -72,6 +77,14 @@ public class PacienteService {
         Paciente paciente = pacienteRepository.findById(cpf)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado com CPF: " + cpf));
         pacienteRepository.delete(paciente);
+    }
+
+    public PacienteDtoResponse convertToDto(Paciente data) {
+        PacienteDtoResponse dto = new PacienteDtoResponse();
+        dto.setNome(data.getNomePaciente());
+        dto.setMedicacao(data.getMedicacao());
+        dto.setTelefone(data.getTelPaciente());
+        return dto;
     }
 
 }

@@ -31,12 +31,11 @@ export function Login() {
     if (validation.success) {
       try {
         const response = await loginUser(formData);
-        console.log(response);
+        
 
         if (response.status === 200) {
-          console.log("Cadastro bem-sucedido: ", response.data);
           const { token, role } = response.data;
-          login(token, role)
+          login(token, role,formData.email)
           resetForm();
           navigate("/perfil");
         } else if (response.status === 401) {

@@ -53,6 +53,13 @@ public class ProfissionalController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> getByEmailProfissional(@PathVariable @Valid String email) {
+        return profissionalService.findProfissionalByEmail(email)
+                .map(result-> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createProfissional (@RequestBody @Valid ProfissionalDto data) {
         try {

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./authContext";
 
 export const AuthProvider = ({ children }) => {
-  const [authData, setAuthData] = useState({ token: "", role: "" });
+  const [authData, setAuthData] = useState({ token: "", role: "", email: "" });
 
-  const login = (token, role) => {
-    setAuthData({ token, role });
+  const login = (token, role, email) => {
+    setAuthData({ token, role, email });
   };
 
   const logout = () => {
-    setAuthData({ token: "", role: "" });
+    setAuthData({ token: "", role: "" , email: ""});
   };
 
   return (

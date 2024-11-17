@@ -1,15 +1,13 @@
 package com.project.mindly.controller;
 
 
-import com.project.mindly.dtos.userAuth.UserAuth;
+
 import com.project.mindly.model.paciente.Paciente;
 import com.project.mindly.dtos.paciente.PacienteDto;
 import com.project.mindly.dtos.paciente.PacienteDtoPatch;
-import com.project.mindly.security.TokenService;
 import com.project.mindly.service.AuthService;
 import com.project.mindly.service.PacienteService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,9 +43,16 @@ public class PacienteController {
         return paciente;
     }
 
-    @GetMapping("/{cpf}")
+    @GetMapping("/cpf/{cpf}")
     public ResponseEntity<Paciente> getByIdPaciente(@PathVariable @Valid String cpf) {
         return pacienteService.findPacienteById(cpf)
+                .map( result -> ResponseEntity.status(HttpStatus.OK).body(result))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> getByEmailPaciente(@PathVariable @Valid String email) {
+        return pacienteService.findPacienteByEmail(email)
                 .map( result -> ResponseEntity.status(HttpStatus.OK).body(result))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

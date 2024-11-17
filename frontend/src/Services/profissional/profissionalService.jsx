@@ -26,4 +26,19 @@ const searchProfissionalPublicName = async (data) => {
     throw e;
   }
 };
-export { addProfissional, getProfisisonalPublic, searchProfissionalPublicName };
+
+const getProfissionalByEmail = async (data) => {
+  try {
+    const response = await api.get("/profissional/email/" + data);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export {
+  addProfissional,
+  getProfisisonalPublic,
+  searchProfissionalPublicName,
+  getProfissionalByEmail,
+};

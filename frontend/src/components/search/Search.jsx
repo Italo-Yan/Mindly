@@ -3,8 +3,7 @@ import { Avatar } from "../avatar/Avatar";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import styles from "./Search.module.css";
 import {
-  getProfisisonalPublic,
-  searchProfissionalPublicName,
+  getProfisisonalPublic
 } from "../../Services/profissional/profissionalService";
 
 export const Search = () => {
@@ -18,7 +17,6 @@ export const Search = () => {
 
   useEffect(() => {
     getProfessionals();
-    searhProfissionals();
   }, []);
 
   const getProfessionals = async () => {
@@ -26,16 +24,6 @@ export const Search = () => {
     setProfessionals(Array.from(response.data));
     return response;
   };
-
-  console.log(professionals);
-  console.log(searchTerm);
-
-  const searhProfissionals = async (searchTerm) => {
-    const response = await searchProfissionalPublicName(searchTerm);
-    console.log(response)
-    return response
-  };
-
   const openProfile = (professional) => {
     setSelectedProfessional(professional);
   };

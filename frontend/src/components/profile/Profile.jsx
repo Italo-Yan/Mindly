@@ -1,28 +1,51 @@
 import { NavLink } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import { EditButton } from "../editButton/EditButton";
 import { UserProfile } from "../user/UserProfile";
 import { useAuth } from "../../Services/auth/useAuth";
-
+import { getPacienteByEmail } from "../../Services/paciente/pacienteService";
+import { getProfissionalByEmail } from "../../Services/profissional/profissionalService";
 import styles from "./Profile.module.css";
 
 export function Profile() {
   const { authData } = useAuth();
-
-  // if (!authData || authData.role) {
-  //   return <div>Carregando...</div>
-  // }
-
+  const [objUser, setObjUser] = useState();
   const isProfessional = authData.role === "PROFISSIONAL";
   const isPatient = authData.role === "PACIENTE";
+  const email = authData.email;
+
+  useEffect(() => {
+    if (email && isProfessional) {
+      findProfissionalByEmail(email);
+    }
+    if (email && isPatient) {
+      findPacienteByEmail(email);
+    }
+  }, [email]);
+
+  const findPacienteByEmail = async (email) => {
+    const response = await getPacienteByEmail(email);
+    setObjUser(response.data);
+    return response;
+  };
+
+  const findProfissionalByEmail = async (email) => {
+    const response = await getProfissionalByEmail(email);
+    setObjUser(response.data);
+    return response;
+  };
+
+  if (!objUser) {
+    return <p>Carregando informações...</p>;
+  }
 
   return (
     <div className={styles.profilePage}>
       <UserProfile
-        name="Maria Oliveira"
-        id="75123456789"
-        crp={isProfessional ? "CRP 1234/04" : ""}
-        description="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim."
+        name={objUser.nome || "Nome indisponível"}
+        id={objUser.telefone || "Telefone indisponível"}
+        crp={isProfessional ? objUser.crp : ""}
+        description={isProfessional ? objUser.descricao : objUser.medicacao}
       />
 
       <div className={styles.cardContainer}>
@@ -35,7 +58,9 @@ export function Profile() {
                 <button className={styles.viewButton}>VISUALIZAR</button>
               </NavLink>
               <h3>PACIENTES AGENDADOS</h3>
-              <EditButton onClick={() => console.log("Editar Pacientes Agendados")} />
+              <EditButton
+                onClick={() => console.log("Editar Pacientes Agendados")}
+              />
             </div>
 
             <div className={`${styles.card} ${styles.professionalCard}`}>
@@ -45,7 +70,7 @@ export function Profile() {
                 <p>Horários Disponíveis e Indisponíveis</p>
               </div>
               <NavLink to={"/schedule/professional"}>
-              <EditButton onClick={() => console.log("Editar Agenda")} />
+                <EditButton onClick={() => console.log("Editar Agenda")} />
               </NavLink>
             </div>
           </>
@@ -60,7 +85,9 @@ export function Profile() {
               <p>Consulta com a Dra. Ana em 20 de novembro, às 14h</p>
             </div>
             <NavLink to={"/calendario"}>
-              <button className={styles.viewButton}>AGENDAR NOVA CONSULTA</button>
+              <button className={styles.viewButton}>
+                AGENDAR NOVA CONSULTA
+              </button>
             </NavLink>
           </div>
         )}

@@ -1,7 +1,9 @@
 package com.project.mindly.service;
 
+
 import com.project.mindly.dtos.profissional.ProfissionalDto;
 import com.project.mindly.dtos.profissional.ProfissionalDtoPatch;
+import com.project.mindly.dtos.profissional.ProfissionalDtoResponse;
 import com.project.mindly.enums.UserRoles;
 import com.project.mindly.model.profissional.Profissional;
 import com.project.mindly.repository.ProfissionalRepository;
@@ -76,6 +78,21 @@ public class ProfissionalService {
     public Optional<List<Profissional>> findProfissionalByName(String nome) {
         List<Profissional> profissionais = profissionalRepository.findByNomeProf(nome);
         return profissionais.isEmpty() ? Optional.empty() : Optional.of(profissionais);
+    }
+
+    public Optional<ProfissionalDtoResponse> findProfissionalByEmail(String email) {
+        Profissional profissional = Optional.ofNullable(profissionalRepository.findByEmailProf(email)) //  retorna um Optional ou um Optional.empty()
+                .orElseThrow(() -> new EntityNotFoundException("Profissional não encontrado com o Email: " + email));
+        return Optional.ofNullable(convertToDto(profissional));
+    }
+
+    public ProfissionalDtoResponse convertToDto(Profissional data) {
+        ProfissionalDtoResponse dto = new ProfissionalDtoResponse();
+        dto.setCrp(data.getCrp());
+        dto.setNome(data.getNomeProf());
+        dto.setTelefone(data.getTelefoneProf());
+        dto.setDescricao(data.getDescProf());
+        return dto;
     }
 
 }
