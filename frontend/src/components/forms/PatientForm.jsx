@@ -134,7 +134,7 @@ export const Patient = () => {
           setTimeout(() => {
             setShowPopup(false);
             navigate("/login");
-          }, 3000);
+          }, 5000);
         } else {
           console.error("Erro ao cadastrar paciente:", response.data);
         }

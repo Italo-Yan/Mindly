@@ -31,11 +31,11 @@ export function Login() {
     if (validation.success) {
       try {
         const response = await loginUser(formData);
-        
+
 
         if (response.status === 200) {
           const { token, role } = response.data;
-          login(token, role,formData.email)
+          login(token, role, formData.email)
           resetForm();
           navigate("/perfil");
         } else if (response.status === 401) {
@@ -66,7 +66,7 @@ export function Login() {
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label htmlFor="email" className={styles.label}>
-              Login
+              Email
             </label>
             <input
               type="text"

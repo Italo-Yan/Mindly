@@ -1,10 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import { EditButton } from "../editButton/EditButton";
 import { UserProfile } from "../user/UserProfile";
 import { useAuth } from "../../Services/auth/useAuth";
+
 import { getPacienteByEmail } from "../../Services/paciente/pacienteService";
 import { getProfissionalByEmail } from "../../Services/profissional/profissionalService";
+
 import styles from "./Profile.module.css";
 
 export function Profile() {
