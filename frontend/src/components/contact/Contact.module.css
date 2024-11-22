@@ -22,6 +22,7 @@
 .contactInfo h2 {
   font-size: 32px;
   font-weight: bold;
+  color: var(--blue-500);
   margin-bottom: 2.5rem;
 }
 

@@ -2,11 +2,11 @@
   text-align: center;
   padding: 20px;
   margin-top: 5rem;
+  color: var(--blue-500);
 }
 
-.servicesContainer > h3 {
+.servicesContainer > h3:first-child {
   font-size: 1rem;
-  color: var(--blue-500);
   margin-bottom: 28px;
 }
 
@@ -58,64 +58,64 @@ h2 {
 /*Responsividade */
 @media (max-width: 1200px) {
   .servicesGrid {
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas grandes */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 30px;
   }
 
   h2 {
-    font-size: 36px; /* Ajustar tamanho da fonte */
+    font-size: 36px;
   }
 }
 
 @media (max-width: 768px) {
   .servicesGrid {
-    grid-template-columns: 1fr; /* 1 coluna em tablets */
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
   h2 {
-    font-size: 28px; /* Ajustar tamanho da fonte */
-    margin-bottom: 50px; /* Ajustar margem inferior */
+    font-size: 28px; 
+    margin-bottom: 50px;
   }
 
   .serviceBox {
-    padding: 15px; /* Ajustar padding */
+    padding: 15px; 
   }
 
   .icon h3 {
-    font-size: 1.8rem; /* Ajustar tamanho da fonte */
+    font-size: 1.8rem; 
   }
 
   .description {
-    font-size: 0.9rem; /* Ajustar tamanho da fonte */
+    font-size: 0.9rem; 
   }
 }
 
 @media (max-width: 576px) {
   .servicesContainer {
-    padding: 10px; /* Ajustar padding */
-    margin-top: 3rem; /* Ajustar margem superior */
+    padding: 10px;
+    margin-top: 3rem;
   }
 
   .servicesGrid {
-    gap: 15px; /* Ajustar gap */
+    gap: 15px;
   }
 
   h2 {
-    font-size: 24px; /* Ajustar tamanho da fonte */
-    margin-bottom: 40px; /* Ajustar margem inferior */
+    font-size: 24px; 
+    margin-bottom: 40px;
   }
 
   .serviceBox {
-    padding: 10px; /* Ajustar padding */
+    padding: 10px;
   }
 
   .icon h3 {
-    font-size: 1.5rem; /* Ajustar tamanho da fonte */
+    font-size: 1.5rem; 
   }
 
   .description {
-    font-size: 0.8rem; /* Ajustar tamanho da fonte */
+    font-size: 0.8rem; 
   }
 }
 

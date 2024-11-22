@@ -9,9 +9,9 @@ export function Description() {
         Organização, agendamento e contato! <br />
         Tudo em um só lugar.
       </h1>
-
-      <button className={styles.button}>SAIBA MAIS</button>
-
+      <a href="#about">
+        <button className={styles.button}>SAIBA MAIS</button>
+      </a>
     </main>
   )
 }

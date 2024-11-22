@@ -3,7 +3,7 @@
   background-color: var(--beige);
   padding: 60px 0 ;
   box-sizing: border-box;
-  overflow-x: hidden; /* Garante que não haverá scroll horizontal */
+  overflow-x: hidden;
 }
 
 .aboutContent {
@@ -22,7 +22,6 @@
 
 .aboutText {
   max-width: 37.5rem;
-  color: var(--black);
 }
 
 .aboutText h4 {
@@ -32,7 +31,7 @@
 }
 
 .aboutText h2 {
-  color: var(--black);
+  color: var(--blue-500);
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
@@ -47,72 +46,72 @@
 /* Responsividade */
 @media (max-width: 1200px) {
   .aboutContent {
-    flex-direction: column; /* Alinha os itens em coluna */
+    flex-direction: column; 
   }
 
   .aboutImage img {
-    max-width: 28rem; /* Ajusta a largura máxima da imagem */
+    max-width: 28rem; 
   }
 
   .aboutText {
-    max-width: 32rem; /* Ajusta a largura máxima do texto */
+    max-width: 32rem; 
   }
 
   .aboutText h2 {
-    font-size: 2rem; /* Ajusta o tamanho da fonte */
+    font-size: 2rem; 
   }
 }
 
 @media (max-width: 992px) {
   .aboutContent {
-    padding: 40px 20px; /* Ajusta o padding */
+    padding: 40px 20px; 
   }
 
   .aboutImage img {
-    max-width: 24rem; /* Ajusta a largura máxima da imagem */
+    max-width: 24rem; 
   }
 
   .aboutText {
-    max-width: 28rem; /* Ajusta a largura máxima do texto */
+    max-width: 28rem; 
   }
 
   .aboutText h2 {
-    font-size: 1.75rem; /* Ajusta o tamanho da fonte */
+    font-size: 1.75rem; 
   }
 }
 
 @media (max-width: 768px) {
   .aboutContent {
-    padding: 30px 15px; /* Ajusta o padding */
+    padding: 30px 15px; 
   }
 
   .aboutImage img {
-    max-width: 20rem; /* Ajusta a largura máxima da imagem */
+    max-width: 20rem; 
   }
 
   .aboutText {
-    max-width: 25rem; /* Ajusta a largura máxima do texto */
+    max-width: 25rem; 
   }
 
   .aboutText h2 {
-    font-size: 1.5rem; /* Ajusta o tamanho da fonte */
+    font-size: 1.5rem; 
   }
 }
 
 @media (max-width: 576px) {
   .aboutContent {
-    padding: 20px 10px; /* Ajusta o padding */
+    padding: 20px 10px; 
   }
 
   .aboutImage img {
-    max-width: 18rem; /* Ajusta a largura máxima da imagem */
+    max-width: 18rem; 
   }
 
   .aboutText {
-    max-width: 22rem; /* Ajusta a largura máxima do texto */
+    max-width: 22rem; 
   }
 
   .aboutText h2 {
-    font-size: 1.25rem; /* Ajusta o tamanho da fonte */
+    font-size: 1.25rem; 
   }
 }

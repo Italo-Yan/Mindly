@@ -48,24 +48,24 @@
 
 /* Estilos específicos para o card do profissional */
 .professionalCard {
-  border-color: var(--green-500);
-  background-color: var(--green-100);
+  border-color: var(--blue-500);
+  background-color: var(--blue-100);
 }
 
 .professionalCard h2,
 .professionalCard h3 {
-  color: var(--green-500);
+  color: var(--blue-500);
 }
 
 /* Estilos específicos para o card do paciente */
 .patientCard {
-  border-color: var(--orange-500);
-  background-color: var(--orange-100);
+  border-color: var(--blue-500);
+  background-color: var(--blue-100);
 }
 
 .patientCard h2,
 .patientCard h3 {
-  color: var(--orange-500);
+  color: var(--blue-500);
 }
 
 .viewButton {
@@ -99,7 +99,6 @@
   background-color: var(--blue-200);
   border-radius: 10px;
 }
-
 .calendar h3 {
   font-size: 1.2rem;
   color: var(--blue-500);
