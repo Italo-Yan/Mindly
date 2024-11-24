@@ -9,7 +9,8 @@ import { RegisterPacient } from '../pages/Forms/RegisterPatient';
 import { LoginPage } from '../pages/Login';
 import { ProfilePage } from '../pages/Profile';
 import { ListPacient } from '../pages/ListPacient';
-import { ScheduleProfessionalPage } from '../pages/Schedule';
+import { ScheduleProfessionalPage } from '../pages/Schedule/index';
+import { SchedulePatientPage } from '../pages/Schedule/indexPatient';
 
 
 export function Router() {
@@ -25,6 +26,8 @@ export function Router() {
         <Route path='/perfil' element={<ProfilePage />} />
         <Route path='/listPacients' element={<ListPacient />} />
         <Route path='/schedule/professional' element={<ScheduleProfessionalPage />} />
+        <Route path='/schedule/patient' element={<SchedulePatientPage />} />
+        
       </Route>
     </Routes>
   )

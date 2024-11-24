@@ -87,7 +87,7 @@ export function Profile() {
               <p>Consulta com o Dr. João em 15 de novembro, às 10h</p>
               <p>Consulta com a Dra. Ana em 20 de novembro, às 14h</p>
             </div>
-            <NavLink to={"/calendario"}>
+            <NavLink to={"/schedule/patient"}>
               <button className={styles.viewButton}>
                 AGENDAR NOVA CONSULTA
               </button>
