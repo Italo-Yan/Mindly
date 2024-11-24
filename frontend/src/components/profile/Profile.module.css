@@ -104,3 +104,54 @@
   color: var(--blue-500);
   margin-bottom: 10px;
 }
+
+/* Estilos gerais para dispositivos móveis */
+@media (max-width: 768px) {
+  .profilePage {
+    margin-top: 50px;
+    padding: 0 20px;
+  }
+
+  .cardContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 300px; /* Limita o tamanho no celular */
+    padding: 20px;
+  }
+
+  .viewButton {
+    padding: 15px 30px;
+    font-size: 0.9rem;
+  }
+
+  .calendar {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+  }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cardContainer {
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-around;
+  }
+
+  .card {
+    width: 45%; /* Duas colunas lado a lado */
+    max-width: 350px;
+  }
+
+  .calendar {
+    width: 240px;
+    height: 200px;
+  }
+}
+

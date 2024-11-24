@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   padding: 20px;
+  width: 100%; /* Garante que o contêiner não ultrapasse a tela */
+  overflow-x: hidden; /* Evita overflow horizontal */
 }
 
 .profileBox {
@@ -9,18 +11,20 @@
   flex-direction: column;
   align-items: center;
 
-  width: 950px;
+  width: 100%; /* Ajusta a largura ao tamanho da tela */
+  max-width: 950px; /* Mantém o limite de largura */
   padding: 30px;
 
   border: 1px solid var(--blue-500);
   border-radius: 10px;
   background-color: var(--white);
+  box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
 }
 
 .profileContent {
   display: flex;
   align-items: flex-start;
-
+  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
   margin-top: 40px;
   margin-bottom: 30px;
 
@@ -30,36 +34,38 @@
 
 .info {
   flex-shrink: 0;
+  color: var(--blue-500); /* Mantém a cor original */
+  text-align: left;
 }
 
 .info h2 {
   margin: 0;
-  font-size: 1.5rem;
-  color: var(--blue-500);
+  font-size: 1.5rem; /* Mantém o tamanho original */
 }
 
 .info p {
   margin: 8px 0;
-  font-size: 1.1rem;
-  color: var(--blue-500);
+  font-size: 1.1rem; /* Mantém a formatação original */
 }
 
 .descriptionBox {
   flex: 1;
   padding-left: 80px;
+  color: var(--gray); /* Preserva a cor original */
+  text-align: left;
 }
 
 .descriptionBox h3 {
   font-size: 2rem;
   font-weight: bold;
-  color: var(--blue-500);
+  color: var(--blue-500); /* Preserva a cor do título */
   margin: 0 0 10px;
 }
 
 .descriptionBox p {
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--gray);
+  color: var(--gray); /* Mantém o estilo original */
 }
 
 .editButtonContainer {
@@ -67,4 +73,49 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .profileBox {
+    padding: 15px;
+  }
+
+  .profileContent {
+    flex-direction: column; /* Empilha os elementos verticalmente */
+    align-items: center;
+    gap: 20px; /* Ajustado para espaçamento consistente */
+  }
+
+  .descriptionBox {
+    padding-left: 0; /* Remove espaçamento lateral em telas menores */
+    text-align: center; /* Centraliza o texto para melhor legibilidade */
+  }
+
+  .info h2 {
+    font-size: 1.3rem; /* Reduz ligeiramente o tamanho em telas pequenas */
+  }
+
+  .info p {
+    font-size: 1rem;
+  }
+
+  .descriptionBox h3 {
+    font-size: 1.5rem;
+  }
+
+  .descriptionBox p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .profileContent {
+    flex-direction: row; /* Mantém os elementos lado a lado */
+    gap: 30px; /* Ajusta o espaçamento */
+  }
+
+  .descriptionBox {
+    padding-left: 40px;
+  }
 }
